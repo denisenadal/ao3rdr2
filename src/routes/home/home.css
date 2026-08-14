@@ -59,3 +59,34 @@
   .estimated-time.dt-type-numeric div {
     max-width: 44px;
   }
+  #ficTable_wrapper label {
+    font-size: 12px;
+    color: #667579;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+#ficTable_wrapper  .dt-input{
+    display: flex;
+  padding: .33rem .33rem;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--bs-body-color);
+  border: var(--bs-border-width) solid var(--bs-border-color);
+  border-radius: var(--bs-border-radius);
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  }
+  #ficTable_wrapper{
+    font-size: 12px;
+  }
+  #ficTable_wrapper .dt-layout-row {
+    align-items: flex-end;
+  }
+  .dt-length {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+  }
+  #ficTable p {
+    margin:0
+  }
