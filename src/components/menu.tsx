@@ -1,16 +1,9 @@
 import {useState} from "react";
+import { NavLink } from "react-router-dom";
+import RouteData from "../lib/routes.ts"
 
 function Menu(){
-    const links = [
-        {"label":"Home", callback: null},
-        {"label":"Backup", callback: null},
-        {"label":"Preferences", callback: null},
-        {"label":"About/Help", callback: null}
-    ];
-    const [activeLink, setActiveLink] = useState(0);
     const[menuOpen, toggleMenu] = useState(false);
-
-
 
     return <>
           <nav className="rightCol position-relative" style={{minWidth:200}}>
@@ -19,10 +12,9 @@ function Menu(){
             </svg>
             <p className="visually-hidden">menu</p>
             <ul className={`dropdown-menu align-items-start position-absolute ${menuOpen ? " show" : ""}`} >
-               { links.map( (link,i) =>{
+               { RouteData.map( (link) =>{
                 let linkClasses = "dropdown-item p-3";
-                linkClasses += activeLink === i ? ' active' : ''
-                return <li ><a href="#" className={linkClasses} key="{link}" onClick={()=>{ setActiveLink(i)}}>{link.label}</a></li>
+                return <li key={link.path}><NavLink to={link.path} className={linkClasses} >{link.label}</NavLink></li>
                 })}
             </ul>
             </button>

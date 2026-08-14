@@ -1,0 +1,61 @@
+@import 'datatables.net-dt';
+@import 'datatables.net-responsive-dt';
+@import 'datatables.net-columncontrol-dt';
+
+#ficTable{
+    font-size: 12px;
+}
+#ficTable .dt-column-header{
+    flex-direction: row;
+}
+#ficTable thead td:not(:last-child) > div::after {
+    content: "|";
+    display: inline-block;
+    color: #dfdfdf;
+    font-size: 20px;
+    height: 20px;
+    margin-top: -20px;
+  }
+.btn-col.dt-type-numeric:first-child {
+    display: none;
+  }
+  .title-col {
+    width: 320px;
+  }
+  .dt-center.read-status.dt-type-numeric {
+    width: 50px;
+  }
+  .rating-col.dt-type-numeric {
+    width: 100px;
+  }
+  .author {
+    width: 180px;
+  }
+  .fandoms {
+    width: 180px;
+  }
+  .last-visit {
+    width: 160px;
+  }
+  .estimated-time.dt-type-numeric {
+    width: 50px;
+  }
+
+  .word-count.dt-type-numeric .dt-column-title {
+    text-align: right;
+  }
+  .word-count.dt-type-numeric{
+    width:60px
+  }
+  .relationships {
+    min-width: 180px;
+  }
+  table.dataTable > thead > tr > th, table.dataTable > thead > tr > td {
+    padding:  6px 6px 3px 6px;
+  }
+  .estimated-time.dt-type-numeric {
+    max-width: 56px;
+  }
+  .estimated-time.dt-type-numeric div {
+    max-width: 44px;
+  }
