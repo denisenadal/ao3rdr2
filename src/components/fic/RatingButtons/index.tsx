@@ -1,5 +1,5 @@
 import type { MouseEvent } from "react";
-import {getRatingIcon} from "./ratingIcons"
+import {getRatingIcon} from "./RatingIcons"
 
 interface RatingProps{
     rating: number,

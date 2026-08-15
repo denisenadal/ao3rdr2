@@ -2,8 +2,8 @@ import {useState} from "react";
 import type { Fic } from "../../types/fic.ts";
 
 import "./home.css"
-import FicTable from "../../components/home/ficTable";
-import FicModal from "../../components/home/ficModal";
+import FicTable from "../../components/home/FicTable";
+import FicModal from "../../components/home/FicModal";
 import fics from "../../temp/fics"
 
 

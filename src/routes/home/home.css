@@ -56,7 +56,7 @@ table.dataTable>thead>tr>td {
 #ficTable thead td:not(:last-child)>div::after {
     content: "|";
     display: inline-block;
-    color: #dfdfdf;
+    color: var(--bs-border-color);
     font-size: 20px;
     height: 20px;
     margin-top: -20px;

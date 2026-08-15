@@ -2,7 +2,7 @@ import {BrowserRouter as Router,Routes, Route } from "react-router-dom";
 import {useEffect} from "react";
 import Home from "./routes/home"
 import Backup from "./routes/backup"
-import Header from "./components/header"
+import Header from "./components/Header"
 import "./../node_modules/bootstrap/dist/css/bootstrap.min.css"
 import DataTable from 'datatables.net-react';
 import DT from 'datatables.net-dt';
@@ -22,7 +22,7 @@ function App(){
   return (
   <Router>
         <Header />
-        <main className="container-xl d-flex">
+        <main className="container-xxl d-flex">
         <Routes>
           <Route path="/" element={<Home />} >
           </Route>
