@@ -1,27 +1,11 @@
-const ao3baseLink = 'https://archiveofourown.org/';
-const getAuthorHtml= function(data:string[]){
-    let html = '';
-    data.forEach(a=>{
-        let label = formatTagLabel(a)
-        if(a !== 'Anonymous'){
-            html += `<a href="https://archiveofourown.org/users/${a}" >${label}</a>, `
-        }
-        else{
-            html += 'Anonymous, '
-        }
-    })
-    //trim trailing comma from last entry
-    if(data.length > 0){
-        html = html.substring(0,html.length - 2)
+import { DateTime } from "luxon";
+import type { Fic } from "../types/fic";
 
-    }
-    return html
-};
-const getTagUrl= function(tagName:string){
+const formatTagUrl = (tagName:string)=>{
     tagName = tagName.replaceAll("/","*s*");
     tagName = tagName.replaceAll(".","*d*");
-    return `${ao3baseLink}tags/${tagName}/works`
-};
+    return tagName
+}
 const formatTagLabel = function(label:string){
     label = label.trim();
     let old = label;
@@ -43,16 +27,46 @@ const formatTagLabel = function(label:string){
     }
     return label
 };
-const getTagListHtml = (fandoms: string[])=>{
-    let links = "";
-    fandoms.forEach(fan =>{
-        let label = formatTagLabel(fan)
-        links = links + `<a href="${getTagUrl(fan)}">${label}</a>, `
-    })
-    if(fandoms.length > 0){
-        links = links.substring(0, links.length - 2);
+const stringToArray = (str:string)=>{
+    let arr;
+    if(str.includes(",") ){
+        arr = str.split(",")
     }
-    return links;
+    else{
+        arr = [str]
+    }
+    return arr;
+}
+const tsToLongString = (ts:number|string)=>{
+    let dt = typeof ts === "string" ? parseInt(ts) : ts;
+    let z = Intl.DateTimeFormat().resolvedOptions().timeZone
+    let d = DateTime.fromISO(dt.toString(), { zone: z });
+    let d2 = d.toFormat('D t')
+    return d2;
 }
 
-export {getAuthorHtml,formatTagLabel,getTagUrl,getTagListHtml}
+const tsToMedString =(ts:number|string)=>{
+    let dt = typeof ts === "string" ? parseInt(ts) : ts;
+    let z = Intl.DateTimeFormat().resolvedOptions().timeZone
+    let d = DateTime.fromISO(dt.toString(), { zone: z });
+    let d2 = d.toFormat('M/dd/yy')
+    return d2;
+}
+
+const extractFilterOptions = (fics: Fic[], dataKey: keyof Fic)=>{
+        const unique = new Set<string>();
+        fics.forEach(fic => {
+          const value = fic[dataKey];
+          if (value) {
+            // Handle arrays (like fandoms) or strings
+            const values = Array.isArray(value) ? value : [value];
+            values.forEach(v => unique.add(String(v)));
+          }
+        });
+        
+        return Array.from(unique).map(value => ({
+          label: value,
+          value: value
+        }));
+      }
+export {formatTagUrl,formatTagLabel, stringToArray,tsToLongString, tsToMedString, extractFilterOptions}

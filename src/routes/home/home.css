@@ -1,92 +1,116 @@
 @import 'datatables.net-dt';
 @import 'datatables.net-responsive-dt';
 @import 'datatables.net-columncontrol-dt';
-
-#ficTable{
+/* all table leements */
+#ficTable_wrapper {
     font-size: 12px;
 }
-#ficTable .dt-column-header{
-    flex-direction: row;
+/* table header and footer inputs */
+#ficTable_wrapper .dt-layout-row {
+    align-items: flex-end;
 }
-#ficTable thead td:not(:last-child) > div::after {
+.dt-length {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+}
+#ficTable_wrapper label {
+    font-size: 12px;
+    color: #667579;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+#ficTable_wrapper .dt-input {
+    display: flex;
+    padding: .33rem .33rem;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--bs-body-color);
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    border-radius: var(--bs-border-radius);
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+#ficTable_wrapper  span.dtcc span.dtcc-button-icon{
+    color: var(--bs-body-color)
+}
+/* all table elements */
+#ficTable p {
+    margin: 0
+}
+#ficTable img {
+    font-size: 8px;
+    color: var(--bs-border-color)
+}
+
+/* table headers */
+#ficTable .dt-column-header {
+    flex-direction: row;
+    gap:2px
+}
+table.dataTable>thead>tr>th,
+table.dataTable>thead>tr>td {
+    padding: 6px 0px 3px 6px;
+}
+
+#ficTable thead td:not(:last-child)>div::after {
     content: "|";
     display: inline-block;
     color: #dfdfdf;
     font-size: 20px;
     height: 20px;
     margin-top: -20px;
-  }
-.btn-col.dt-type-numeric:first-child {
-    display: none;
-  }
-  .title-col {
-    width: 320px;
-  }
-  .dt-center.read-status.dt-type-numeric {
-    width: 50px;
-  }
-  .rating-col.dt-type-numeric {
-    width: 100px;
-  }
-  .author {
-    width: 180px;
-  }
-  .fandoms {
-    width: 180px;
-  }
-  .last-visit {
-    width: 160px;
-  }
-  .estimated-time.dt-type-numeric {
-    width: 50px;
-  }
-
-  .word-count.dt-type-numeric .dt-column-title {
-    text-align: right;
-  }
-  .word-count.dt-type-numeric{
-    width:60px
-  }
-  .relationships {
-    min-width: 180px;
-  }
-  table.dataTable > thead > tr > th, table.dataTable > thead > tr > td {
-    padding:  6px 6px 3px 6px;
-  }
-  .estimated-time.dt-type-numeric {
-    max-width: 56px;
-  }
-  .estimated-time.dt-type-numeric div {
-    max-width: 44px;
-  }
-  #ficTable_wrapper label {
-    font-size: 12px;
-    color: #667579;
-    font-weight: 600;
-    text-transform: uppercase;
-  }
-#ficTable_wrapper  .dt-input{
-    display: flex;
-  padding: .33rem .33rem;
-  font-size: 12px;
-  font-weight: 400;
-  line-height: 1.5;
-  color: var(--bs-body-color);
-  border: var(--bs-border-width) solid var(--bs-border-color);
-  border-radius: var(--bs-border-radius);
-  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-  }
-  #ficTable_wrapper{
-    font-size: 12px;
-  }
-  #ficTable_wrapper .dt-layout-row {
-    align-items: flex-end;
-  }
-  .dt-length {
-    display: flex;
+}
+/* table columns */
+#ficTable tbody td {
     align-items: center;
-    gap: .5rem;
-  }
-  #ficTable p {
-    margin:0
-  }
+}
+.rating-col.dt-type-numeric {
+    width: 100px;
+}
+.read-status {
+    max-width: 60px;
+}
+.title-col {
+    width: 320px;
+    min-width: 180px;
+}
+.author {
+    width: 160px;
+    min-width: 80px;
+}
+.fandoms {
+    width: 200px;
+    min-width: 120px;
+}
+.relationships {
+    min-width: 160px;
+    min-width: 100px;
+}
+#ficTable .fandoms a,
+#ficTable .author a,
+#ficTable .relationships a {
+  display: inline;
+}
+.last-visit {
+    min-width: 130px;
+    max-width: 130px;
+}
+.word-count {
+    width: 60px
+}
+.word-count.dt-column-title {
+    text-align: right;
+}
+.estimated-time {
+    width: 50px;
+    max-width: 56px;
+}
+
+.estimated-time.dt-type-numeric div {
+    max-width: 44px;
+}
+
+
+
+

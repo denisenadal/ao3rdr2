@@ -28,10 +28,10 @@ export type Fic = {
   word_count?: number;
   word_count__ts?: number;
   /** Historical data mixes numeric and string ratings. */
-  rating?: number;
-  rating__ts?: number;
-  read?: number;
-  read__ts?: number;
+  rating: number;
+  rating__ts: number;
+  read: number;
+  read__ts: number;
   chapter?: number;
   visit?: string;
   visit__ts?: number;

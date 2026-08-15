@@ -1,24 +1,39 @@
-import DataTable from 'datatables.net-react';
-import 'datatables.net-columncontrol-dt';
-
+import {useState} from "react";
 import type { Fic } from "../../types/fic.ts";
-import {columns,options} from "../../lib/dtConfig.ts"
+
 import "./home.css"
-interface homeProps {
-    fics: Fic[];
+import FicTable from "../../components/home/ficTable";
+import FicModal from "../../components/home/ficModal";
+import fics from "../../temp/fics"
+
+
+function Home(){
+  const [ficList,updateFicList] = useState(fics);
+  
+  const [modalState, updateModalState] = useState({
+    show: false,
+    fic:fics[0]
+  })
+  const updateSelectedFic = (fic:Fic)=>{
+    updateModalState({fic:fic,show:true})
+    console.log(fic)
+    console.log(modalState.fic)
+    console.log(modalState.show)
+
+  };
+  const updateModalVisibility =()=>{
+    updateModalState({fic:modalState.fic,show:!modalState.show})
   }
-
-function Home({fics}: homeProps){
-
     return (
-    <section className="table-section">
+    <>
       {/* <table>
         {fics.map((fic)=>{
             return <tr><td>{fic.title}</td><td>{fic.author}</td></tr>
         })}
       </table> */}
-      <DataTable id="ficTable" data={fics} columns={columns} options={options} ></DataTable>
-    </section>
+      <FicTable fics={ficList} updateSelectedFic={updateSelectedFic} />
+      <FicModal fic={modalState.fic} show={modalState.show}  toggleModal={updateModalVisibility}/>
+    </>
 )}
 
 export default Home
