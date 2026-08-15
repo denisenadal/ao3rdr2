@@ -1,0 +1,6 @@
+
+.rating-icon path[fill="var(--bs-body-color)"], 
+.rating-icon path[fill="#000"] {
+    stroke-width: 2.3!Important;
+    stroke: #3d3e41;
+  }

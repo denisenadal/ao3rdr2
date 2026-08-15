@@ -35,6 +35,7 @@ export type Fic = {
   chapter: number;
   visit: string;
   visit__ts: number;
+  personal_tags?: string[];
   /** Historical data mixes boolean and 0/1. */
   deleted: boolean | number;
   deleted__ts: number;

@@ -2,12 +2,12 @@ import type { Fic } from "../../types/fic.ts";
 
 interface fsProps{
     fic: Fic,
-    updateSelectedFic: (fic:Fic)=> void
+    loadModalFic: (fic:Fic)=> void
 }
 
-const FicSelector= ({fic, updateSelectedFic}:fsProps)=>{
+const FicSelector= ({fic, loadModalFic}:fsProps)=>{
     const setSelectedFic = ()=>{
-        updateSelectedFic(fic)
+        loadModalFic(fic)
     }
 return (
     <button className='btn btn-link text-decoration-none view-fic-row m-0 p-0'  onClick={setSelectedFic}>

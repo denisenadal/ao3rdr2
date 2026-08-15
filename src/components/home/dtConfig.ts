@@ -1,14 +1,9 @@
 import type { DataTableProps } from "datatables.net-react";
 import "datatables.net-columncontrol";
 import "datatables.net-responsive";
-type FilterOption = { label: string; value: any };
-type ColumnFilterOptions = {
-  title?: FilterOption[];
-  author?: FilterOption[];
-  fandoms?: FilterOption[];
-  relationship?: FilterOption[];
-};
-const getControl =  (options?: Array<{ label: string, value: any }>)=>{
+import type {FilterKey,OptionSet} from "../../components/home/filterOptions"
+
+const getControl =  (options?: OptionSet)=>{
   return [
     "order",
     {
@@ -21,7 +16,7 @@ const getControl =  (options?: Array<{ label: string, value: any }>)=>{
       }]
     }];
 }
-const getColumnConfig = (options: ColumnFilterOptions) => {
+const getColumnConfig = (filterOptions:Record<FilterKey, OptionSet> ) => {
   /** Plugin fields (responsivePriority, columnControl, etc.) aren't fully reflected in DT3's ColumnsConfig. */
   const columns = [
     {
@@ -57,7 +52,7 @@ const getColumnConfig = (options: ColumnFilterOptions) => {
       searchable: true,
       responsivePriority: 1,
       className: "title-col",
-      columnControl: getControl(options.title),
+      columnControl: getControl(filterOptions.title),
     },
     {
       title: "Author",
@@ -65,7 +60,7 @@ const getColumnConfig = (options: ColumnFilterOptions) => {
       className: "author",
       searchable: true,
       responsivePriority: 6,
-      columnControl: getControl(options.author),
+      columnControl: getControl(filterOptions.author),
     },
     {
       title: "Fandoms",
@@ -73,7 +68,7 @@ const getColumnConfig = (options: ColumnFilterOptions) => {
       searchable: true,
       className: "fandoms",
       responsivePriority: 7,
-      columnControl: getControl(options.fandoms),
+      columnControl: getControl(filterOptions.fandom),
     },
     {
       title: "Relationship",
@@ -81,7 +76,14 @@ const getColumnConfig = (options: ColumnFilterOptions) => {
       className: "relationships",
       searchable: true,
       responsivePriority: 4,
-      columnControl: getControl(options.relationship),
+      columnControl: getControl(filterOptions.relationship),
+    },    {
+      title: "Tags",
+      data: "personal_tags",
+      type: "date",
+      className: "user-tags",
+      responsivePriority: 8,
+      columnControl: getControl(filterOptions.personal_tags),
     },
     {
       title: "Last Visit",
@@ -90,14 +92,6 @@ const getColumnConfig = (options: ColumnFilterOptions) => {
       responsivePriority: 2,
       className: "last-visit",
       columnControl: ["order"],
-    },
-    {
-      title: "Updated",
-      data: "updated",
-      type: "date",
-      className: "updated-date",
-      responsivePriority: 8,
-      columnControl: ["order"]
     },
     {
       title: "Words",

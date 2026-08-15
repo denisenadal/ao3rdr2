@@ -1,20 +1,51 @@
 import type { Fic } from "../../types/fic.ts";
-import type { MouseEvent } from "react"
 import RatingButtons from "../../components/fic/RatingButtons"
 import FicLinks from "../../components/fic/FicLinks"
 import FicText from "../../components/fic/FicText"
+import Button from "../../components/Button"
+import TagList from "../../components/fic/TagList"
 
 interface modalProps {
   fic: Fic,
   show: boolean,
-  toggleModal: () => void
+  toggleModal: () => void,
+  updateFic: (fic:Fic)=>void
 }
 
-const FicModal = ({ fic, show, toggleModal }: modalProps) => {
+const FicModal = ({ fic, show, toggleModal, updateFic }: modalProps) => {
   const chapterString = fic.chapters.published + "/" + fic.chapters.total
-  // const handleToggle=(e:MouseEvent)=>{
-  //   toggleModal()
-  // }
+
+  function removeTag(tag:string){
+    const tags = fic.personal_tags || []
+    if(tags.length === 0){
+      return
+    }
+    const updatedTags = tags.filter((t:string)=>{return t !==tag})
+    const updatedFic = {...fic,personal_tags:updatedTags}
+    updateFic(updatedFic);
+  }
+
+  function addTag(tag:string){
+    const tags = fic.personal_tags || []
+   if(tags.includes(tag)){
+    return
+   }
+    const updatedTags = [...tags,tag]
+    const updatedFic = {...fic,personal_tags:updatedTags}
+    updateFic(updatedFic);
+  }
+
+  function renderTags(tags?:string[] ){
+    if(fic.personal_tags)
+    return (<section className="row pt-3">
+      <label className="m-0 form-label col-11" >Personal Tags</label>
+      <TagList tags={tags} size="md" removeTag={removeTag} addTag={addTag} />
+    </section>)
+  }
+
+  function handleToggle(){
+    toggleModal();
+  }
   return (
 
     <section className={"fic-modal " + (show ? "show" : "hide")} style={{ display: show ? "block" : "none" }}>
@@ -22,7 +53,7 @@ const FicModal = ({ fic, show, toggleModal }: modalProps) => {
       <div className={"modal modal-lg " + (show ? "show" : "hide")} style={{ display: show ? "block" : "none" }}>
         <dialog className="modal-dialog modal-content">
           <header className="modal-header ">
-            <button className="btn btn-link position-absolute" style={{top:0,right:0}} aria-label="Close" onClick={toggleModal}>
+            <button className="btn btn-link position-absolute" style={{top:0,right:0}} aria-label="Close" onClick={handleToggle}>
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="var(--bs-body-color)" width="24" height="24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
               </svg>
@@ -39,24 +70,24 @@ const FicModal = ({ fic, show, toggleModal }: modalProps) => {
             <section className="row">
               <div className="col-6">
                 <p className="m-0 form-label">Pairing</p>&nbsp;<span id="fm-cat"></span>
-                {<FicLinks value={fic.relationship} ao3id={fic.ao3id} linkType="tags" />}
+                {<FicLinks value={fic.relationship} ao3id={fic.ao3id} linkType="tag" />}
               </div>
               <div className="col-6">
                 <p className="m-0 form-label">Fandoms</p>
                 <p id="fm-fandoms">
-                  {<FicLinks value={fic.fandom} ao3id={fic.ao3id} linkType="tags" />}
+                  {<FicLinks value={fic.fandom} ao3id={fic.ao3id} linkType="tag" />}
                 </p>
               </div>
               <div className="col-6">
                 <p className="m-0 form-label">Word Count</p>
                 <p id="fm-wc">
-                  {<FicText text={fic.word_count} textType="WordCount" />}
+                  {<FicText textType="WordCount">{fic.word_count}</FicText>}
                 </p>
               </div>
               <div className="col-6">
                 <p className="m-0 form-label">Chapters</p>
                 <p id="fm-chapters">
-                  {<FicText text={chapterString} textType="Generic" />}
+                  {<FicText textType="Generic">{chapterString}</FicText>}
                 </p>
               </div>
             </section>
@@ -64,31 +95,31 @@ const FicModal = ({ fic, show, toggleModal }: modalProps) => {
               <div className="col-6">
                 <p className="m-0 form-label">Updated</p>
                 <p id="fm-update">
-                  {<FicText text={fic.visit} textType="LongDate" />}
+                  {<FicText textType="LongDate">{fic.visit}</FicText>}
                 </p>
               </div>
               <div className="col-6">
                 <p className="m-0 form-label">Visited</p>
                 <p id="fm-visit">
-                  {<FicText text={fic.visit} textType="LongDate" />}
+                  {<FicText textType="LongDate">{fic.visit}</FicText>}
                 </p>
               </div>
             </section>
             <section className="row">
               <div className="col-12">
                 <p className="m-0 form-label">Summary</p>
-                <p id="fm-summary"> {<FicText text={fic.summary} textType="Summary" />}</p>
+                <p id="fm-summary">{ <FicText textType="Summary">{fic.summary}</FicText>}</p>
               </div>
             </section>
 
             <section className="row px-2">
               <label className="m-0 form-label col-11" >Notes</label>
-              <div id="notes-loading" className="loading col-1" style={{ opacity: 0 }}></div>
               <textarea name="notes" id="fm-notes" className="form-input col-12"></textarea>
             </section>
+            {renderTags(fic.personal_tags)}
           </main>
           <footer id="fm-footer" className="modal-footer">
-            <a id="fm-update-fic" className="btn"><i className="icon icon-refresh"></i> Update Missing Fields</a>
+            <Button color="info" variant="muted" onClick={()=>window.alert("hello")}>Click Me</Button>
           </footer>
         </dialog>
       </div>

@@ -1,0 +1,34 @@
+.tag {
+    overflow: hidden;
+}
+
+.tag button.badge {
+    font-weight: 600;
+    line-height: 1em;
+    font-size: 1rem;
+    padding: .4em 1.8em .5em .9em
+}
+
+.tag.md .badge {
+    font-size: .96rem;
+
+}
+
+.tag.sm .badge {
+    font-size: .76rem;
+}
+
+.tag .badge.close {
+    border: none;
+    outline: none;
+    background: none;
+    position: absolute;
+    right: .3em;
+    top: .1em;
+    padding: .2em;
+}
+
+.tag .close:hover svg {
+    stroke-width: 3.5;
+    transform: scale(1.2)
+}

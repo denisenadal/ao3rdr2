@@ -2,7 +2,7 @@ import type { MouseEvent } from "react";
 
 interface readStatusProps {
     status: boolean,
-    size: number,
+    size?: number,
     editable: boolean
 }
 function changeReadStatus(e: MouseEvent) {
@@ -14,7 +14,7 @@ function ReadStatusToggle({ status = false, size = 24, editable = true }: readSt
 
     if (!status) {
         for (let i = 0; i < fillColors.length; i++) {
-            fillColors[i] = i === fillColors.length - 1 ? "var(--bs-body-color)": "black"
+            fillColors[i] = i === fillColors.length - 1 ? "var(--bs-body-color)": "var(--bs-background-color)"
         }
     }
     let styles ={}

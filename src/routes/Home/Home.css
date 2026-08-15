@@ -4,6 +4,7 @@
 /* all table leements */
 #ficTable_wrapper {
     font-size: 12px;
+    --dt-body_padding: 6px;
 }
 /* table header and footer inputs */
 #ficTable_wrapper .dt-layout-row {
@@ -62,6 +63,9 @@ table.dataTable>thead>tr>td {
     margin-top: -20px;
 }
 /* table columns */
+#ficTable tbody tr:nth-child(2n) td {
+    background: rgba(var(--bs-body-color-rgb),.05)
+  }
 #ficTable tbody td {
     align-items: center;
 }

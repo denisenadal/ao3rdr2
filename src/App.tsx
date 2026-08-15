@@ -1,7 +1,7 @@
 import {BrowserRouter as Router,Routes, Route } from "react-router-dom";
 import {useEffect} from "react";
-import Home from "./routes/home"
-import Backup from "./routes/backup"
+import Home from "./routes/Home"
+import Backup from "./routes/Backup"
 import Header from "./components/Header"
 import "./../node_modules/bootstrap/dist/css/bootstrap.min.css"
 import DataTable from 'datatables.net-react';
