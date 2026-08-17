@@ -36,7 +36,7 @@ function getEstTime(words:number,separateHours:boolean): [number, number]{
     if(separateHours){
         return [
             Math.floor(totalMinutes / 60), 
-            Math.floor(totalMinutes % 60)
+            (Math.floor(totalMinutes % 60) || 1)
         ]
     }
     

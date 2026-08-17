@@ -47,28 +47,30 @@ Use a better box model (opinionated).
   /* Neutrals */
   --color-white-rgb: 255, 255, 255;
   --color-white: rgb(var(--color-white-rgb)); /* #ffffff*/
-  --gs-025-rgb: 247, 248, 249;
-  --gs-025: rgb(var(--gs-025-rgb)); /* #f7f8f9*/
-  --gs-050-rgb: 238, 240, 243;
-  --gs-050: rgb(var(--gs-050-rgb)); /*#e6e8eb ;*/
-  --gs-100-rgb: 218, 222, 228;
-  --gs-100: rgb(var(--gs-100-rgb)); /* #dadee4*/
-  --gs-200-rgb: 188, 195, 206;
-  --gs-200: rgb(var(--gs-200-rgb)); /* #bcc3ce*/
-  --gs-300-rgb: 173, 182, 196;
-  --gs-300: rgb(var(--gs-300-rgb)); /* #adb6c4*/
-  --gs-400-rgb: 102, 113, 137;
-  --gs-400: rgb(var(--gs-400-rgb)); /* #667189*/
-  --gs-500-rgb: 102, 117, 140;
-  --gs-500: rgb(var(--gs-500-rgb)); /* #66758c*/
-  --gs-600-rgb: 80, 92, 110;
-  --gs-600: rgb(var(--gs-600-rgb)); /* #505c6e*/
-  --gs-700-rgb: 69, 80, 96;
-  --gs-700: rgb(var(--gs-700-rgb)); /* #455060*/
-  --gs-800-rgb: 59, 67, 81;
-  --gs-800: rgb(var(--gs-800-rgb)); /* #3b4351*/
-  --gs-900-rgb: 48, 55, 66;
-  --gs-900: rgb(var(--gs-900-rgb)); /* #303742*/
+  --gs-000-rgb: 250, 252, 255;
+  --gs-000: rgb(250, 252, 255);
+  --gs-025-rgb: 244, 242, 255;
+  --gs-025: #F4F2FF; /* #f7f8f9*/
+  --gs-050-rgb: 230, 230, 240;
+  --gs-050: #e6e6f0;
+  --gs-100-rgb: 184, 189, 217;
+  --gs-100:  #b8bdd9;
+  --gs-200-rgb: 170, 173, 207;
+  --gs-200: #AAADCF;
+  --gs-300-rgb:148, 152, 189;
+  --gs-300:#9498bd;
+  --gs-400-rgb: rgb(125, 134, 163);
+  --gs-400: #7d86a3;
+  --gs-500-rgb: 109, 114, 140;
+  --gs-500: #6D728C;
+  --gs-600-rgb: 76, 84, 115;
+  --gs-600: #4C5473;
+  --gs-700-rgb: 54, 63, 89;
+  --gs-700: #363F59;
+  --gs-800-rgb: 37, 45, 64;
+  --gs-800: #252D40;
+  --gs-900-rgb: 22, 28, 38;
+  --gs-900: #161C26;
   --color-black: #000;
   --color-black-rgb: 0,0,0;
 
@@ -155,8 +157,8 @@ Use a better box model (opinionated).
   /* Semantic aliases */
   --color-light: var(--color-white);
   --color-light-rgb: var(--color-white-rgb);
-  --color-background: var(--gs-025);
-  --color-background-rgb: var(--gs-025-rgb);
+  --color-background: var(--gs-000);
+  --color-background-rgb: var(--gs-000-rgb);
   --color-foreground: var(--gs-800);
   --color-foreground-rgb: var(--gs-800-rgb);
   --color-shadow: var(--gs-900);
@@ -192,7 +194,6 @@ Use a better box model (opinionated).
   --color-gray-rgb:var(--gs-700-rgb);
   --color-gray-contrast: var(--color-white);
   --color-gray-contrast-rgb:var(--color-white-rgb);
-
 }
 
 html {
@@ -286,7 +287,10 @@ textarea {
   /* r5 */
   margin: 0; /* 2 */
 }
-
+button{
+  background: none;
+  border:none
+}
 /**
 Correct the inability to style clickable types in iOS and Safari.
 */

@@ -1,7 +1,7 @@
 import type { MouseEvent } from "react";
-import DataTable from 'react-data-table-component';
+import DataTable,{ type TableStyles } from 'react-data-table-component';
 import { type TableColumn } from 'react-data-table-component';
-import type { Fic, FicFieldTypes } from "../../types/fic.ts";
+import type { Fic } from "../../types/fic.ts";
 import { formatFicText, getEstTime } from "../fic/ficHelpers.ts"
 import Icon from "../Icon"
 import Button  from "../Button";
@@ -9,12 +9,14 @@ import ReadStatusToggle from "../fic/ReadStatusToggle"
 import RatingButtons from "../fic/RatingButtons"
 import TagList from "../fic/TagList"
 import FicLinks from "../fic/FicLinks"
-
+// TODO fix filters for custom render fields
+//TODO add tag cell click event to add new tag
 interface tableProps {
   fics: Fic[],
   updateSelectedFic: (fic: Fic) => void,
   toggleModal: (fic: Fic) => void;
 }
+
 const FicTable = ({ fics, updateSelectedFic, toggleModal }: tableProps) => {
   const minDefault = "30px"
 
@@ -30,6 +32,17 @@ const FicTable = ({ fics, updateSelectedFic, toggleModal }: tableProps) => {
       newRating = 0;
     }
      let updatedFic: Fic = {...fic, rating: newRating }
+    updateSelectedFic(updatedFic);
+  }
+  function handleRemoveTag(e:MouseEvent, fic?: Fic | undefined) {
+    if (!fic) { return; }
+    const tags = fic.personal_tags || []
+    if (tags.length === 0) { return }
+    let tag = e.currentTarget.getAttribute("data-tag") || "";
+    if(tag ==="" ){return}
+
+    const updatedTags = tags.filter((t: string) => { return t !== tag })
+    const updatedFic = { ...fic, personal_tags: updatedTags }
     updateSelectedFic(updatedFic);
   }
   const columns: TableColumn<Fic>[] = [
@@ -49,9 +62,10 @@ const FicTable = ({ fics, updateSelectedFic, toggleModal }: tableProps) => {
       id: "rating",
       sortable: true,
       filterable: true,
-      button: true,
-      minWidth: "140px",
-      maxWidth: "160px",
+      minWidth: "100px",
+      maxWidth: "110px",
+      filterType: "number",
+      sortFunction:(a,b)=>{ return a.rating - b.rating},
       cell: row => { return (<RatingButtons fic={row} size={18} showAll={true} changeRating={ handleRatingChange} />) }
     },
     {
@@ -59,9 +73,11 @@ const FicTable = ({ fics, updateSelectedFic, toggleModal }: tableProps) => {
       id: "read",
       sortable: true,
       filterable: true,
+      filterType: "number",
       button: true,
-      minWidth: minDefault,
-      maxWidth: "60px",
+      minWidth: "60px",
+      maxWidth: "80px",
+      sortFunction:(a,b)=>{ return a.read - b.read},
       cell: row => { return (<ReadStatusToggle fic={row} size={18} changeReadStatus={()=>{handleReadChange(row)}} />) }
     },
     {
@@ -69,10 +85,12 @@ const FicTable = ({ fics, updateSelectedFic, toggleModal }: tableProps) => {
       id: "title",
       sortable: true,
       filterable: true,
+      filterType: "text",
       wrap: true,
       ignoreRowClick: true,
       minWidth: "240px",
       maxWidth: "420px",
+      sortFunction:(a,b)=>{ const aname = typeof a.title  === "string" ? a.title.toLowerCase() : "";const bname =  typeof b.title  === "string"  ? b.title.toLowerCase() : ""; return (aname.localeCompare(bname.toLowerCase(), undefined, { sensitivity: 'base' })) },
       cell: row => { return (<FicLinks linkType="work" items={row.title} ao3id={row.ao3id} />) }
     },
     {
@@ -82,8 +100,9 @@ const FicTable = ({ fics, updateSelectedFic, toggleModal }: tableProps) => {
       filterable: true,
       wrap: true,
       ignoreRowClick: true,
-      minWidth: "120px",
+      minWidth: "100px",
       maxWidth: "200px",
+      sortFunction:(a,b)=>{ const aname = typeof a.author  === "string" ? a.author.toLowerCase() : "";const bname =  typeof b.author  === "string"  ? b.author.toLowerCase() : ""; return (aname.localeCompare(bname.toLowerCase(), undefined, { sensitivity: 'base' })) },
       cell: row => { return (<FicLinks linkType="user" items={row.author} ao3id={row.ao3id} />) }
 
     },
@@ -96,6 +115,7 @@ const FicTable = ({ fics, updateSelectedFic, toggleModal }: tableProps) => {
       ignoreRowClick: true,
       minWidth: "160px",
       maxWidth: "280px",
+      sortFunction:(a,b)=>{ const aname = typeof a.fandom  === "string" ? a.fandom.toLowerCase() : "";const bname =  typeof b.fandom  === "string"  ? b.fandom.toLowerCase() : ""; return (aname.localeCompare(bname, undefined, { sensitivity: 'base' })) },
       cell: row => { return (<FicLinks linkType="tag" items={row.fandom} ao3id={row.ao3id} />) }
 
     },
@@ -106,8 +126,9 @@ const FicTable = ({ fics, updateSelectedFic, toggleModal }: tableProps) => {
       filterable: true,
       wrap: true,
       ignoreRowClick: true,
-      minWidth: "120px",
+      minWidth: "140px",
       maxWidth: "280px",
+      sortFunction:(a,b)=>{ const aname = typeof a.relationship  === "string" ? a.relationship.toLowerCase() : "";const bname =  typeof b.relationship  === "string"  ? b.relationship.toLowerCase() : ""; return (aname.localeCompare(bname, undefined, { sensitivity: 'base' })) },
       cell: row => { return (<FicLinks linkType="tag" items={row.relationship} ao3id={row.ao3id} />) }
     },
     {
@@ -119,16 +140,23 @@ const FicTable = ({ fics, updateSelectedFic, toggleModal }: tableProps) => {
       ignoreRowClick: true,
       minWidth: "160px",
       maxWidth: "420px",
-      cell: row => { return (<TagList fic={row} tags={row.personal_tags} size="sm" addTag={() => { }} removeTag={() => {handleRemovedTag("",row) }} />) }
+      sortFunction: (a,b)=>{ 
+        const atag = a.personal_tags && a.personal_tags.length > 0 ? a.personal_tags[0].toLowerCase(): ""; 
+        const btag = b.personal_tags && b.personal_tags.length > 0 ? b.personal_tags[0].toLowerCase(): ""; 
+        return (atag.localeCompare(btag, undefined, { sensitivity: 'base' }))
+       },
+      cell: row => { return (<TagList fic={row} tags={row.personal_tags} size="sm" addTag={() => { }}  removeTag={(e)=>{handleRemoveTag(e,row)}}  />) }
 
     },
     {
-      name: "Last Visit",
+      name: "Visited",
       id: "visit",
       sortable: true,
+      filterable: true,
       right: true,
-      minWidth: "60px",
-      maxWidth: "80px",
+      minWidth: "66px",
+      maxWidth: "86px",
+      filterType: "datetime",
       selector: row => row.visit,
       format: (row, i) => {
         let visitDate = row.visit
@@ -165,21 +193,10 @@ const FicTable = ({ fics, updateSelectedFic, toggleModal }: tableProps) => {
     }
   ]
 
-  const fieldByCol = columns.map((col) => col.id) as (keyof Fic)[];
-
-  function handleRemovedTag(tag: string, fic?: Fic | undefined) {
-    if (!fic) { return; }
-    const tags = fic.personal_tags || []
-    if (tags.length === 0) { return }
-    const updatedTags = tags.filter((t: string) => { return t !== tag })
-    const updatedFic = { ...fic, personal_tags: updatedTags }
-    updateSelectedFic(updatedFic);
-  }
 
 
-
-  return (<section id="main-fic-table" className="table-section">
-    <DataTable columns={columns} data={fics} keyField="ao3id" pagination={true} theme="default" />;
+  return (<section id="fic-table" className="table-section">
+    <DataTable columns={columns} data={fics} keyField="ao3id" pagination={true} defaultSortFieldId="visit" defaultSortAsc={false} theme="default" striped={true} />;
   </section>
   )
 }

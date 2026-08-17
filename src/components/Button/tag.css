@@ -41,3 +41,23 @@
     stroke-width: 3.5;
     transform: scale(1.2)
 }
+
+/* TODO move to ficlinks */
+.tag-list.link-list a:not(:last-child):after {
+    content: ", ";
+    margin-right: 2px;
+    color: var(--color-gray);
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 12px;
+  }
+
+  
+  ul.tag-list {
+    flex-flow: row wrap;
+    gap: 0px;
+  }
+  ul.tag-list li {
+    margin: 0;
+    padding: 0;
+  }

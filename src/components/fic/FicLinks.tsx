@@ -22,8 +22,8 @@ const  FicLinks=({linkType, items,ao3id}:ficLinkProps) =>{
             {itemArray.map(label => {
                 if (!label) { return (<span className="empty"></span>)}
                 return isUnknown(linkType, label) ?
-                    <p>{label}</p> :
-                    <a href={getFicUrl(linkType, label, ao3id)} >{label}</a>
+                    <div key={label} className="link-item">{label}</div> :
+                    <a key={label} className="link-item" href={getFicUrl(linkType, label, ao3id)} >{label}</a>
             })}
         </div>)
 }

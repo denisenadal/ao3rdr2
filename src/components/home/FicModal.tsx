@@ -92,9 +92,9 @@ const FicModal = ({ fic, show, toggleModal, updateFic }: modalProps) => {
               </div>
               <div className="column col-6 form-group">
                 <p className="m-0 form-label">Fandoms</p>
-                <p id="fm-fandoms">
+                <div id="fm-fandoms">
                   {<FicLinks items={fic.fandom} ao3id={fic.ao3id} linkType="tag" />}
-                </p>
+                </div>
               </div>
               <div className="column col-6 form-group">
                 <p className="m-0 form-label">Word Count</p>
