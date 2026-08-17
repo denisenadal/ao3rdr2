@@ -1,7 +1,7 @@
 import type { Fic } from "../../types/fic.ts";
 import RatingButtons from "../../components/fic/RatingButtons"
 import FicLinks from "../../components/fic/FicLinks"
-import FicText from "../../components/fic/FicText"
+import {formatFicText} from "../fic/ficHelpers.ts"
 import Button from "../../components/Button"
 import TagList from "../../components/fic/TagList"
 
@@ -53,7 +53,7 @@ const FicModal = ({ fic, show, toggleModal, updateFic }: modalProps) => {
       <div className={"modal modal-lg " + (show ? "show" : "hide")} style={{ display: show ? "block" : "none" }}>
         <dialog className="modal-dialog modal-content">
           <header className="modal-header ">
-            <button className="btn btn-link position-absolute" style={{top:0,right:0}} aria-label="Close" onClick={handleToggle}>
+            <button className="btn btn-link p-absolute" style={{top:0,right:0}} aria-label="Close" onClick={handleToggle}>
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="var(--bs-body-color)" width="24" height="24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
               </svg>
@@ -81,13 +81,13 @@ const FicModal = ({ fic, show, toggleModal, updateFic }: modalProps) => {
               <div className="col-6">
                 <p className="m-0 form-label">Word Count</p>
                 <p id="fm-wc">
-                  {<FicText textType="WordCount">{fic.word_count}</FicText>}
+                  {formatFicText("WordCount",fic.word_count)}
                 </p>
               </div>
               <div className="col-6">
                 <p className="m-0 form-label">Chapters</p>
                 <p id="fm-chapters">
-                  {<FicText textType="Generic">{chapterString}</FicText>}
+                  {formatFicText("Generic",chapterString)}
                 </p>
               </div>
             </section>
@@ -95,20 +95,20 @@ const FicModal = ({ fic, show, toggleModal, updateFic }: modalProps) => {
               <div className="col-6">
                 <p className="m-0 form-label">Updated</p>
                 <p id="fm-update">
-                  {<FicText textType="LongDate">{fic.visit}</FicText>}
+                  {formatFicText("LongDate",fic.visit)}
                 </p>
               </div>
               <div className="col-6">
                 <p className="m-0 form-label">Visited</p>
                 <p id="fm-visit">
-                  {<FicText textType="LongDate">{fic.visit}</FicText>}
+                  {formatFicText("LongDate",fic.visit)}
                 </p>
               </div>
             </section>
             <section className="row">
               <div className="col-12">
                 <p className="m-0 form-label">Summary</p>
-                <p id="fm-summary">{ <FicText textType="Summary">{fic.summary}</FicText>}</p>
+                <p id="fm-summary">{ formatFicText("Summary",fic.summary)}</p>
               </div>
             </section>
 

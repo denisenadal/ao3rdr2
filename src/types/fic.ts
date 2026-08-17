@@ -3,7 +3,7 @@ export type FicChapters = {
   total: number;
   complete: number;
 };
-
+export type FicFieldTypes = number | string | boolean | string[] | FicChapters
 /** Bookmarked fic row from AO3rdr backup / sync data. */
 export type Fic = {
   ao3id: number;
@@ -44,3 +44,5 @@ export type Fic = {
   chapter_id: string;
   chapter_id__ts: number;
 };
+
+

@@ -2,13 +2,15 @@ import {BrowserRouter as Router,Routes, Route } from "react-router-dom";
 import {useEffect} from "react";
 import Home from "./routes/Home"
 import Backup from "./routes/Backup"
+import Styles from "./routes/Styles"
 import Header from "./components/Header"
-import "./../node_modules/bootstrap/dist/css/bootstrap.min.css"
-import DataTable from 'datatables.net-react';
-import DT from 'datatables.net-dt';
-import 'datatables.net-responsive-dt';
-import 'datatables.net-columncontrol-dt';
-DataTable.use(DT);
+// import "./../node_modules/bootstrap/dist/css/bootstrap.min.css"
+
+import './assets/spectre-fork.css'
+import '@spectre-org/spectre-css/dist/spectre-exp.css'
+import './assets/global.css'
+
+
 
 function App(){
 
@@ -22,13 +24,13 @@ function App(){
   return (
   <Router>
         <Header />
-        <main className="container-xxl d-flex">
+        <main className="container grid-xxl d-flex">
         <Routes>
-          <Route path="/" element={<Home />} >
-          </Route>
+          <Route path="/" element={<Home />} ></Route>
           <Route path="/backup" element={<Backup />}></Route>
           <Route path="/preferences"></Route>
           <Route path="/about"></Route>
+          <Route path="/styles" element={<Styles />}></Route>
         </Routes>
         </main>
   </Router>

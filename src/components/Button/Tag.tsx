@@ -9,32 +9,19 @@ interface tagProps {
   color?: colorScheme,
   variant?: buttonVariant,
   size: "sm"|"md";
+  className?: string;
+  style?: React.CSSProperties;
   onRemove?: () => void,
-  onClick?: () => void
 }
 
-const Tag = ({ children, color, variant, size = "md",onRemove, onClick }: tagProps) => {
-  function clickHandler(e: MouseEvent) {
-    if (onClick)
-      onClick();
-  }
+const Tag = ({ children, color="primary", variant="muted", size = "md",className="", style,onRemove }: tagProps) => {
   const iconSize = size === "md" ? 16 : 12;
 
-  if (variant === "solid") {
-    return (
-      <div className={"tag position-relative "+size} >
-        <button type="button" className={"badge rounded-pill btn"+ " btn-"+color} onClick={clickHandler} >{children}</button>
-        {onRemove ? (<button type="button" className={"close text-bg-" + color } aria-label="Close" onClick={() => { onRemove() }}><Icon size={iconSize} name="close" /></button>) : ""}
-      </div>
-    )
-  }
   return (
-    <div className={"tag position-relative "+size} >
-      <button type="button" className={"badge rounded-pill"+ " btn-" + variant+" btn-"+color} onClick={clickHandler}>{children}</button>
-      {onRemove ? (
-        <button type="button" className={"badge close"+ " btn-" + variant+" btn-"+color} aria-label="Close" onClick={() => { onRemove() }}><Icon size={iconSize} name="close" /></button>) 
-        : ""}
-    </div>
+    <button type="button" className={"tag p-relative chip "+size+" btn-"+color+" btn-"+variant+" "+className} style={style} onClick={() => { if(onRemove){onRemove()}} } >
+      {children}
+      <Icon className="btn-icon btn-close"  size={iconSize} name={"close"} />
+    </button>
   )
 }
 

@@ -1,24 +1,33 @@
 .tag {
     overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
 }
 
-.tag button.badge {
+.tag button.btn {
     font-weight: 600;
     line-height: 1em;
     font-size: 1rem;
-    padding: .4em 1.8em .5em .9em
+    padding: .1rem;
+    line-height: 1;
+    min-height: 0;
+    font-size: 12px;
+     height: 100%;
 }
-
-.tag.md .badge {
+.tag button.main {
+    padding: .15rem 1rem .1rem .5rem;
+}
+.tag.md .btn {
     font-size: .96rem;
 
 }
 
-.tag.sm .badge {
+.tag.sm .btn {
     font-size: .76rem;
 }
 
-.tag .badge.close {
+.tag .btn.close {
     border: none;
     outline: none;
     background: none;

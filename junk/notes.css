@@ -1,0 +1,160 @@
+@charset "UTF-8";
+/*! SpectreCSS v1.2.0 | MIT License | https://github.com/spectre-org/spectre-css ;
+/**
+Manually forked from modern-normalize with some removals:
+
+- r1 Box model, already set by spectre.
+- r2 Font family, already set by spectre.
+- r3 Line height, already set by spectre.
+- r4 Monospace font family, already set by spectre.
+- r5 Font size and line height on form elements, already set by spectre.
+
+And some temporary removals:
+- tr1 Tab size, to ensure backwards compatibility with spectre v1. TODO: Add this back when releasing spectre v2.
+- tr2 Table border color, to ensure backwards compatibility with spectre v1. TODO: Add this back when releasing spectre v2.
+
+To make it easier to update this fork with upstream changes, please only remove code, and remove it by commenting it out.
+If you need to change or add something, do it in the upstream repo or do it in a different file.
+;
+/*! modern-normalize v3.0.0 | MIT License | https://github.com/sindresorhus/modern-normalize */
+/*
+Document
+========
+*/
+/**
+Use a better box model (opinionated).
+*/
+/* r1 */
+:root {
+  /* Primary */
+  --color-primary-rgb: 87, 85, 217;
+  --color-primary:  rgb(112, 12, 21) ;
+  --color-primary-dark-rgb: 75, 72, 214;
+  --color-primary-dark:  #5E0411;
+  --color-primary-hover-rgb: 66, 64, 212;
+  --color-primary-hover:  #a22226;; ;
+  --color-primary-active-rgb: 58, 56, 210;
+  --color-primary-active:  #a22226;;
+  --color-primary-border-rgb: 54, 52, 210;
+  --color-primary-border:  #39000F; ;
+  --color-primary-darkest-rgb: 48, 46, 205;
+  --color-primary-darkest:  #26000C ;
+  --color-primary-light-rgb: 128, 127, 226;
+  --color-primary-light:  #d14a4a ;
+  --color-primary-lighter-rgb: 108, 106, 222;
+  --color-primary-lighter:  #eb8d8d ;
+
+  /* Secondary  */
+  --color-secondary-rgb: 241, 241, 252;
+  --color-secondary:  #f1f1fc ;
+  --color-secondary-dark-rgb: 229, 229, 249;
+  --color-secondary-dark:  #e5e5f9 ;
+  --color-secondary-hover-rgb: 209, 208, 244;
+  --color-secondary-hover:  #d1d0f4 ;
+  --color-secondary-light-rgb: 250, 250, 254;
+  --color-secondary-light:  #fafafe ;
+
+  /* Neutrals  */
+  --color-light-rgb: 255, 255, 255;
+  --color-light:  #ffffff ;
+  --color-light-dark-rgb: 242, 242, 242;
+  --color-light-dark:  #f2f2f2 ;
+  --color-dark-rgb: 48, 55, 66;
+  --color-dark:  #303742 ;
+  --color-text-rgb: 59, 67, 81;
+  --color-text:  #3b4351 ;
+  --color-bg-rgb: 247, 248, 249;
+  --color-bg:  #f7f8f9 ;
+  --color-bg-dark-rgb: 238, 240, 243;
+  --color-bg-dark:  #eef0f3 ;
+  --color-border-rgb: 218, 222, 228;
+  --color-border:  #dadee4 ;
+  --color-gray-rgb: 188, 195, 206;
+  --color-gray:  #bcc3ce ;
+  --color-gray-hover-rgb: 173, 182, 196;
+  --color-gray-hover:  #adb6c4 ;
+  --color-gray-light-rgb: 203, 208, 217;
+  --color-gray-light:  #cbd0d9 ;
+  --color-gray-dark-rgb: 102, 117, 140;
+  --color-gray-dark:  #66758c ;
+  --color-gray-darker-rgb: 80, 92, 110;
+  --color-gray-darker:  #505c6e ;
+  --color-gray-darkest-rgb: 69, 80, 96;
+  --color-gray-darkest:  #455060 ;
+  --color-divider-rgb: 241, 243, 245;
+  --color-divider:  #f1f3f5 ;
+  --color-icon-rgb: 102, 113, 137;
+  --color-icon:  #667189 ;
+
+  /* Success  */
+  --color-success-rgb: 50, 182, 67;
+  --color-success:  #32b643 ;
+  --color-success-dark-rgb: 47, 170, 63;
+  --color-success-dark:  #2faa3f ;
+  --color-success-hover-rgb: 48, 174, 64;
+  --color-success-hover:  #30ae40 ;
+  --color-success-border-rgb: 45, 162, 60;
+  --color-success-border:  #2da23c ;
+  --color-success-active-rgb: 42, 154, 57;
+  --color-success-active:  #2a9a39 ;
+  --color-success-darkest-rgb: 39, 142, 52;
+  --color-success-darkest:  #278e34 ;
+  --color-success-light-rgb: 57, 201, 75;
+  --color-success-light:  #39c94b ;
+  --color-success-bg-rgb: 249, 253, 250;
+  --color-success-bg:  #f9fdfa ;
+
+  /* Warning  */
+  --color-warning-rgb: 255, 183, 0;
+  --color-warning:  #ffb700 ;
+  --color-warning-dark-rgb: 230, 165, 0;
+  --color-warning-dark:  #e6a500 ;
+  --color-warning-light-rgb: 255, 190, 26;
+  --color-warning-light:  #ffbe1a ;
+  --color-highlight-rgb: 255, 233, 179;
+  --color-highlight:  #ffe9b3 ;
+  --color-highlight-border-rgb: 255, 211, 103;
+  --color-highlight-border:  #ffd367 ;
+
+  /* Error  */
+  --color-error-rgb: 232, 86, 0;
+  --color-error:  #e85600 ;
+  --color-error-dark-rgb: 217, 80, 0;
+  --color-error-dark:  #d95000 ;
+  --color-error-hover-rgb: 222, 82, 0;
+  --color-error-hover:  #de5200 ;
+  --color-error-border-rgb: 207, 77, 0;
+  --color-error-border:  #cf4d00 ;
+  --color-error-active-rgb: 196, 73, 0;
+  --color-error-active:  #c44900 ;
+  --color-error-darkest-rgb: 181, 67, 0;
+  --color-error-darkest:  #b54300 ;
+  --color-error-light-rgb: 255, 96, 3;
+  --color-error-light:  #ff6003 ;
+  --color-error-bg-rgb: 255, 250, 247;
+  --color-error-bg:  #fffaf7 ;
+
+  /* Code  */
+  --color-code-rgb: 215, 62, 72;
+  --color-code:  #d73e48 ;
+  --color-code-bg-rgb: 252, 242, 242;
+  --color-code-bg:  #fcf2f2 ;
+
+  /* Semantic aliases  */
+  --color-background: var(--color-light);
+  --color-background-rgb: var(--color-light-rgb);
+  --color-inputs: var(--color-bg-dark);
+  --color-inputs-rgb: var(--color-bg-dark-rgb);
+  --color-borders: var(--color-gray);
+  --color-borders-rgb: var(--color-gray-rgb);
+  --color-primary-contrast: var(--color-light);
+  --color-primary-contrast-rgb: var(--color-light-rgb);
+  --color-secondary-contrast: var(--color-text);
+  --color-secondary-contrast-rgb: var(--color-text-rgb);
+  --color-success-contrast: var(--color-light);
+  --color-success-contrast-rgb: var(--color-light-rgb);
+  --color-error-contrast: var(--color-light);
+  --color-error-contrast-rgb: var(--color-light-rgb);
+  --color-warning-contrast: var(--color-light);
+  --color-warning-contrast-rgb: var(--color-light-rgb);
+}

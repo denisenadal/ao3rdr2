@@ -1,5 +1,6 @@
 # Todo
-
+[] finish hew table
+     -> custom cells?
 [] updateficrating in component
 [] save & edit notes
 [] create preference page

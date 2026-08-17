@@ -1,32 +1,33 @@
-import { formatTagLabel, formatTagUrl,stringToArray} from "../../lib/format"
-type LinkType = "user" | "tag" | "work";
+import { stringToArray } from "../../lib/format"
+import { formatTagLabel, getFicUrl, isUnknown, type LinkType } from "./ficHelpers"
 
 interface ficLinkProps {
-  value: string|string[];
-  ao3id: number | null;
-  linkType: LinkType;
+    items: string | string[];
+    ao3id: number | null;
+    linkType: LinkType;
 }
 
-function FicLinks({value,ao3id,linkType}:ficLinkProps){
-    let items = typeof value == "string" ?  stringToArray(value) : value
-    return <>{
-        items.map((item,i,arr)=>{
-            if(item === "..." || item === "" ){
-                return item
-            }
-            let ending = i === arr.length - 1 ? "" : ", "
-            let path = linkType === "work" ? ao3id : (linkType === "user"? item : formatTagUrl(item)+"/works" ) 
-            let label = item;
-            if(linkType !== "work"){
-                label = formatTagLabel(item)
-            }
-            if(linkType === "user" && item == "Anonymous"){
-                return "Anonymous"+ending
-            }
-            return <span key={item} style={{display:"contents"}}><a  href={"https://archiveofourown.org/"+linkType+"s/"+path} >{label}</a>{ending}</span>
-        })
-    }</>
+const  FicLinks=({linkType, items,ao3id}:ficLinkProps) =>{
+    if(!items){ return}
+    let itemArray=[];
+    if(typeof items=== "string"){
+        itemArray = linkType === "work" ? [items] : stringToArray(items)
+    }
+    else{
+        itemArray = [...items]
+    }
+    
+    return (
+        <div className={linkType + "-list link-list"}>
+            {itemArray.map(label => {
+                if (!label) { return (<span className="empty"></span>)}
+                return isUnknown(linkType, label) ?
+                    <p>{label}</p> :
+                    <a href={getFicUrl(linkType, label, ao3id)} >{label}</a>
+            })}
+        </div>)
 }
+
 
 
 

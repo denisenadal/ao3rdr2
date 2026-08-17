@@ -1,14 +1,12 @@
-import { useState, useEffect } from "react";
-import type { Fic } from "../../types/fic.ts";
+import { useState} from "react";
 
 import "./Home.css"
 import FicTable from "../../components/home/FicTable";
 import FicModal from "../../components/home/FicModal";
-import {buildFilterOptions} from "../../components/home/filterOptions";
-import type {OptionSet} from "../../components/home/filterOptions";
-
+import type { Fic } from "../../types/fic.ts";
 
 import fics from "../../temp/fics"
+
 
 function Home() {  
   const [ficList, updateFicList] = useState(fics);
@@ -16,11 +14,7 @@ function Home() {
     show: false,
     fic: fics[0]
   })
-  const [filterOptions, updateFilterOptions] = useState<Record<string, OptionSet>>({});
 
-  useEffect(() => {
-    updateFilterOptions(buildFilterOptions(ficList));
-  }, [ficList]);
 
   const updateSelectedFic = (fic: Fic) => {
     updateFicList(ficList.map(f =>
@@ -39,11 +33,11 @@ function Home() {
     updateModalState({ fic: modalState.fic, show: !modalState.show })
   }
   
-  
+
   return (
     <>
-      <FicTable fics={ficList} updateSelectedFic={updateSelectedFic} filterOptions={filterOptions} toggleModal={updateModalVisibility} />
-      <FicModal fic={modalState.fic} show={modalState.show} toggleModal={updateModalVisibility} updateFic={updateSelectedFic} />
+      <FicTable fics={ficList} updateSelectedFic={updateSelectedFic}  toggleModal={updateModalVisibility} />
+      <FicModal fic={modalState.fic} show={modalState.show} toggleModal={updateModalVisibility} updateFic={updateSelectedFic} /> 
     </>
   )
 }
