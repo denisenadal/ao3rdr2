@@ -1,9 +1,10 @@
 import "./rating.css"
-
+const getOutline = (isBlank:boolean)=>{
+    return isBlank ? "var(--color-foreground)" : "var(--color-black)";
+}
 const hateIcon = (size: number, isBlank: boolean) => {
     let fillColor = isBlank ? "none" : "#c9acc8";
-    let outlineColor = isBlank ? "var(--bs-body-color)" : "#000";
-
+    let outlineColor = getOutline(isBlank)
     return (
         <svg xmlns="http://www.w3.org/2000/svg" className="rating-icon" viewBox="0 0 45.1 64.3" height={size} width={size + (size * .1)}>
             <path fill={fillColor} stroke={fillColor} strokeLinecap="round" strokeWidth="1.5" d="M17.6 60.3A20 20 0 0 1 3.3 41.6c0-5.5 1-8.6 5-16.3 1.9-3.8 3.7-8 3.8-9.2l.4-2.1 1.3 1.2c2.4 2.3 3.5 5 3.7 10.1.2 3.6.5 4.8 1 5q1.9.4 5.1-6.2 3-6.4.4-14.3c-.6-1.8-1-3.4-.9-3.6.5-.4 8.4 7.5 10.7 10.7a40 40 0 0 1 8 23.9c0 4.8-.2 5.5-1.7 8.7a19.5 19.5 0 0 1-22.5 10.8zm-1.3-8.8c1-4.7 5.5-7 9.3-4.8 1.7 1 3.2 3.3 3.2 4.9q0 1 .8 1.4c2.6 1 1.9-4.4-1-7-5.1-4.7-13.2-2.5-14.5 4-.6 3.2 1.5 4.7 2.2 1.5zm-2-10 1-2c.2-.9 0-1.3-1.4-2.1-2.2-1.3-2.6-1-2.6 1.4 0 2.8 1.7 4.3 3 2.6zm19-.2c.8-.9 1-2.7.5-4.2-.5-1.3-4 .6-4 2.1 0 1.2 1.3 2.9 2.1 2.9q.6-.1 1.3-.8z" />
@@ -15,7 +16,7 @@ const hateIcon = (size: number, isBlank: boolean) => {
 }
 
 const dislikeIcon = (size: number, isBlank: boolean) => {
-    let outlineColor = isBlank ? "var(--bs-body-color)" : "#000";
+    let outlineColor = getOutline(isBlank)
 
     return (
         <svg xmlns="http://www.w3.org/2000/svg" height={size} width={size + (size * .1)} className="rating-icon" viewBox="5 -10 53.6 69.3">
@@ -30,7 +31,7 @@ const dislikeIcon = (size: number, isBlank: boolean) => {
 
 const neutralIcon = (size: number, isBlank: boolean) => {
     let fillColor = isBlank ? "none" : "#8cc2c0";
-    let outlineColor = isBlank ? "var(--bs-body-color)" : "#000";
+    let outlineColor = getOutline(isBlank)
 
     return (
         <svg xmlns="http://www.w3.org/2000/svg" height={size} width={size + (size * .1)} className="rating-icon" viewBox="5 -10 53.6 69.3">
@@ -45,7 +46,7 @@ const neutralIcon = (size: number, isBlank: boolean) => {
 }
 const likeIcon = (size: number, isBlank: boolean) => {
     let fillColor = isBlank ? "none" : "#c9acc8";
-    let outlineColor = isBlank ? "var(--bs-body-color)" : "#000";
+    let outlineColor = getOutline(isBlank)
 
     return (
         <svg xmlns="http://www.w3.org/2000/svg" height={size} width={size + (size * .1)} className="rating-icon" viewBox="5 -10 53.6 69.3">
@@ -59,7 +60,7 @@ const likeIcon = (size: number, isBlank: boolean) => {
 }
 const loveIcon = (size: number, isBlank: boolean) => {
     let fillColor = isBlank ? "none" : "#ffdc54";
-    let outlineColor = isBlank ? "var(--bs-body-color)" : "#000";
+    let outlineColor = getOutline(isBlank)
 
     return (<svg xmlns="http://www.w3.org/2000/svg" height={size} width={size + (size * .1)} className="rating-icon" viewBox="5 -10 53.6 69.3">
         <path d="M11.7 48.3c-.4-1 .1-7.8.8-11.8l.7-4L9 28.4q-6.7-6.9-6.3-8.1c.3-.9 5.8-2.3 12.2-3.2l3.4-.5 2.3-4.4a41 41 0 0 1 5.5-8.9c.7-.7.8-.7 1.3-.2 1 1 3.3 4.6 5.6 9 1.2 2.3 2.4 4.3 2.6 4.4s2.6.6 5.3 1a27 27 0 0 1 9.7 2.5l.6.6-1.4 2c-.7 1-3.1 3.8-5.3 6l-4 4 .2 1.3.8 5.5c.4 2.5.6 5.1.6 6.7l-.1 2.6h-1.3c-1.4-.1-5.8-2-10.5-4.4L27 42.4 21.8 45c-7 3.4-9.7 4.3-10.1 3.3zm17.6-10.7c3.7-.7 7.2-4.8 5.6-6.5-.5-.5-15.6-.5-16 0-1 1 .2 3.8 2.3 5.2q3.3 2.3 8.1 1.3zm-8.5-8.4c.6-.7.7-2 .4-3q-.7-1.6-2-.7c-1.3.9-.9 4 .6 4q.6 0 1-.3zm13.9-.1c.8-.7.7-2.6 0-3.4q-.6-.6-1-.6-.2 0-.9.6c-.7.7-.7 2.3 0 3.2q.7 1.1 1.9.2z" fill={fillColor} stroke={fillColor} strokeWidth="1.99999999" strokeLinecap="round" strokeMiterlimit="4" transform="translate(-4.4 -10)scale(1.35)" />

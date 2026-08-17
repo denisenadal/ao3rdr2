@@ -1,5 +1,5 @@
 import type { Fic } from "../types/fic";
-import data from "./shortFics.json";
+import data from "./fics.json";
 
 const fics = data as Fic[];
 

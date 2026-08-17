@@ -1,0 +1,16 @@
+.fic-modal .modal-header .columns {
+    justify-content: center;
+    align-items: flex-start;
+}
+.fic-modal  p{
+    margin:0;
+    padding:0;
+}
+.fic-modal .modal-body{
+    gap: 1rem 0;
+  display: flex;
+  flex-flow: column;
+}
+.fic-modal .editable .form-label{
+    padding-bottom: .3rem
+}

@@ -1,10 +1,12 @@
 import type { Fic } from "../../types/fic.ts";
 import RatingButtons from "../../components/fic/RatingButtons"
+import ReadStatusToggle from "../../components/fic/ReadStatusToggle"
 import FicLinks from "../../components/fic/FicLinks"
 import {formatFicText} from "../fic/ficHelpers.ts"
 import Button from "../../components/Button"
 import TagList from "../../components/fic/TagList"
-
+import Icon from "../../components/Icon"
+import "./modal.css"
 interface modalProps {
   fic: Fic,
   show: boolean,
@@ -37,7 +39,7 @@ const FicModal = ({ fic, show, toggleModal, updateFic }: modalProps) => {
 
   function renderTags(tags?:string[] ){
     if(fic.personal_tags)
-    return (<section className="row pt-3">
+    return (<section className="columns form-group editable">
       <label className="m-0 form-label col-11" >Personal Tags</label>
       <TagList tags={tags} size="md" removeTag={removeTag} addTag={addTag} />
     </section>)
@@ -48,73 +50,68 @@ const FicModal = ({ fic, show, toggleModal, updateFic }: modalProps) => {
   }
   return (
 
-    <section className={"fic-modal " + (show ? "show" : "hide")} style={{ display: show ? "block" : "none" }}>
-      <div className={"modal-backdrop fade " + (show ? "show" : "hide")}></div>
-      <div className={"modal modal-lg " + (show ? "show" : "hide")} style={{ display: show ? "block" : "none" }}>
-        <dialog className="modal-dialog modal-content">
-          <header className="modal-header ">
-            <button className="btn btn-link p-absolute" style={{top:0,right:0}} aria-label="Close" onClick={handleToggle}>
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="var(--bs-body-color)" width="24" height="24">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
-              </svg>
+    <section className={"fic-modal modal " + (show ? "active" : "hide")} >
+      <a href="#close" className={"modal-overlay"} aria-label="Close" onClick={(e)=>{e.preventDefault();handleToggle()}}></a>
+        <dialog className="modal-container">
+          <header className="modal-header p-relative">
+            <button className="btn btn-ghost s-circle p-absolute" style={{top:".5rem",right:0}} aria-label="Close" onClick={handleToggle}>
+              <Icon name="close" className="close-modal btn-icon" />
             </button>
-            <section className="flex-column d-flex flex-grow-1">
+            <section className="flex-column d-flex columns">
               <h2 id="fm-heading" className="modal-title m-0 h4">{fic.title}</h2>
               <p id="fm-author" className="m-0">{fic.author}</p>
             </section>
-            <section className="flex-column ">
+            <section className="columns">
+              
+              <div className="column col-auto">
+              <ReadStatusToggle fic={fic} size={24} changeReadStatus={()=>{}} />
+              </div>
+              <div className="column">
               <RatingButtons rating={fic.rating} size={24} showAll={true} editable={true} />
-            </section>
-          </header>
-          <main className="modal-body">
-            <section className="row">
-              <div className="col-6">
-                <p className="m-0 form-label">Pairing</p>&nbsp;<span id="fm-cat"></span>
-                {<FicLinks value={fic.relationship} ao3id={fic.ao3id} linkType="tag" />}
               </div>
-              <div className="col-6">
-                <p className="m-0 form-label">Fandoms</p>
-                <p id="fm-fandoms">
-                  {<FicLinks value={fic.fandom} ao3id={fic.ao3id} linkType="tag" />}
-                </p>
-              </div>
-              <div className="col-6">
-                <p className="m-0 form-label">Word Count</p>
-                <p id="fm-wc">
-                  {formatFicText("WordCount",fic.word_count)}
-                </p>
-              </div>
-              <div className="col-6">
-                <p className="m-0 form-label">Chapters</p>
-                <p id="fm-chapters">
-                  {formatFicText("Generic",chapterString)}
-                </p>
-              </div>
-            </section>
-            <section  className="row">
-              <div className="col-6">
-                <p className="m-0 form-label">Updated</p>
-                <p id="fm-update">
-                  {formatFicText("LongDate",fic.visit)}
-                </p>
-              </div>
-              <div className="col-6">
+              <div className="column col-auto form-group text-right">
                 <p className="m-0 form-label">Visited</p>
                 <p id="fm-visit">
                   {formatFicText("LongDate",fic.visit)}
                 </p>
               </div>
             </section>
-            <section className="row">
+          </header>
+          <main className="modal-body">
+            <section className="columns">
+              <div className="column col-6 form-group">
+                <p className="m-0 form-label">Pairing &nbsp;<span id="fm-cat"></span></p>
+                {<FicLinks items={fic.relationship} ao3id={fic.ao3id} linkType="tag" />}
+              </div>
+              <div className="column col-6 form-group">
+                <p className="m-0 form-label">Fandoms</p>
+                <p id="fm-fandoms">
+                  {<FicLinks items={fic.fandom} ao3id={fic.ao3id} linkType="tag" />}
+                </p>
+              </div>
+              <div className="column col-6 form-group">
+                <p className="m-0 form-label">Word Count</p>
+                <p id="fm-wc">
+                  {formatFicText("WordCount",fic.word_count)}
+                </p>
+              </div>
+              <div className="column col-6 form-group">
+                <p className="m-0 form-label">Chapters</p>
+                <p id="fm-chapters">
+                  {formatFicText("Generic",chapterString)}
+                </p>
+              </div>
+            </section>
+            <section className="columns py-3">
               <div className="col-12">
                 <p className="m-0 form-label">Summary</p>
                 <p id="fm-summary">{ formatFicText("Summary",fic.summary)}</p>
               </div>
             </section>
 
-            <section className="row px-2">
+            <section className="columns form-group">
               <label className="m-0 form-label col-11" >Notes</label>
-              <textarea name="notes" id="fm-notes" className="form-input col-12"></textarea>
+              <textarea name="notes" id="fm-notes" className="form-input col-12 editable"></textarea>
             </section>
             {renderTags(fic.personal_tags)}
           </main>
@@ -122,7 +119,6 @@ const FicModal = ({ fic, show, toggleModal, updateFic }: modalProps) => {
             <Button color="info" variant="muted" onClick={()=>window.alert("hello")}>Click Me</Button>
           </footer>
         </dialog>
-      </div>
     </section>
   )
 }

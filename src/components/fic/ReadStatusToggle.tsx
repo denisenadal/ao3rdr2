@@ -1,28 +1,22 @@
-import type { MouseEvent } from "react";
+import type { Fic } from "../../types/fic.ts";
 
 interface readStatusProps {
-    status: boolean,
+    fic: Fic,
     size?: number,
-    editable: boolean
+    changeReadStatus: (fic:Fic)=> void
 }
-function changeReadStatus(e: MouseEvent) {
-    console.log(e)
-}
-function ReadStatusToggle({ status = false, size = 24, editable = true }: readStatusProps) {
-    const url = "/images/bookmark-" + (status ? "" : "to-") + "read.svg"
-    const fillColors = ["#F8AC49", "#E6DFD2", "#5CD5CF" , "black"]
 
-    if (!status) {
+function ReadStatusToggle({ fic, size = 24, changeReadStatus }: readStatusProps) {
+    const editable = changeReadStatus !== undefined
+    const fillColors = ["#F8AC49", "#E6DFD2", "#5CD5CF" , "black"]
+    if (!fic.read) {
         for (let i = 0; i < fillColors.length; i++) {
-            fillColors[i] = i === fillColors.length - 1 ? "var(--bs-body-color)": "var(--bs-background-color)"
+            fillColors[i] = i === fillColors.length - 1 ? "var(--color-foreground)": "var(--color-background)"
         }
     }
-    let styles ={}
-    if(document.documentElement.hasAttribute("data-bs-theme") && document.documentElement.getAttribute("data-bs-theme") === "dark"){
-        styles = {mixBlendMode: "difference",
-            opacity: 0.7}
-    }
-    return (<button className="btn btn-link text-decoration-none rating-button p-0" onClick={changeReadStatus} disabled={!editable} style={styles}>
+    
+
+    return (<button className="read-button btn-icon s-circle p-0" onClick={()=>{if(changeReadStatus){changeReadStatus(fic)}} } disabled={!editable} >
         <svg  height={size} viewBox="0 0 58 48" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M6 43V39L5.5 10.5L30.5 16L53 11V37V43.5L6 43Z" fill={fillColors[0]} />
             <path d="M28.5 44.5C28.5 44.5 21.5 36.5 4.00002 37.5C2.00002 31.5 3.50002 10.5 3.50002 10.5H7.00002L8.00002 6L20 9.5L29.5 16C29.5 16 39 6.00002 51 6C51.3231 7.7274 51 10.5 51 10.5H55.5C55.5 10.5 55.5 33.5 54.5 37.5C36 37.5 28.5 44.5 28.5 44.5Z" fill={fillColors[1]} />

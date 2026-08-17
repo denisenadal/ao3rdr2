@@ -36,7 +36,7 @@ function RatingButtons({rating, size, showAll , editable= true} : RatingProps) {
                     let isBlank = i !== rating;
 
                     return ( 
-                    <button key={i} className="btn btn-link text-decoration-none rating-button p-0"  onClick={changeRating}  disabled={!editable}>
+                    <button key={i} className="btn-icon s-circle p-0 rating-button"  onClick={changeRating}  disabled={!editable}>
                         {getRatingIcon(i, size, isBlank)}
                         </button>
                         

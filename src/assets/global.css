@@ -28,6 +28,7 @@ body {
     font-family: "Public Sans", sans-serif;
     background: var(--color-background);
     color: var(--color-foreground);
+    font-size: 14px;
 }
 h1,.h1 {
     font-weight: 700;
@@ -93,4 +94,15 @@ a,.btn{
     .container.grid-xxl {
         padding: 0 2rem;
     }
+}
+
+.read-button{
+    background: transparent;
+    border:none;
+}
+.read-button:hover svg *[fill="var(--color-foreground)"]{
+    fill: var(--color-primary)
+}
+.read-button:hover svg *[fill="var(--color-background)"]{
+    fill: rgba(var(--color-primary-rgb),.06)
 }

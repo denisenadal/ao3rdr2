@@ -1,6 +1,8 @@
 
-.rating-icon path[fill="var(--bs-body-color)"], 
-.rating-icon path[fill="#000"] {
-    stroke-width: 2.3!Important;
-    stroke: #3d3e41;
-  }
+.rating-button:hover svg *[fill="var(--color-foreground)"]{
+  fill: var(--color-primary)
+}
+.rating-button:hover svg *[fill="var(--color-background)"],
+.rating-button:hover svg *[fill="none"]{
+  fill: rgba(var(--color-primary-rgb),.36)
+}

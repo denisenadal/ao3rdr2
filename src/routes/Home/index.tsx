@@ -28,7 +28,7 @@ function Home() {
   const updateModalVisibility = (fic?:Fic) => {
     if(fic){
       updateModalState({ fic: fic, show: true})
-
+      return 
     }
     updateModalState({ fic: modalState.fic, show: !modalState.show })
   }

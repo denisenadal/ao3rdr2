@@ -1095,9 +1095,11 @@ textarea {
 }
 
 .form-label {
-  display: block;
-  line-height: 1.2rem;
-  padding: .3rem 0;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 12px;
+  color: var(--color-gray);
+  padding:.3rem 0;
 }
 .form-label.label-sm {
   font-size: .7rem;
@@ -2638,16 +2640,18 @@ summary.accordion-header::-webkit-details-marker {
   z-index: 400;
 }
 .modal:target .modal-overlay,
-.modal.active .modal-overlay {
-  background: rgba(var(--color-background-rgb), .75);
-  bottom: 0;
-  cursor: default;
-  display: block;
-  left: 0;
-  position: absolute;
-  right: 0;
-  top: 0;
-}
+.modal.active .modal-overlay  {
+    width: 100vw;
+    height: 100vh;
+    display: block;
+    position: absolute;
+    background: rgba(var(--gs-700-rgb),.4);
+    z-index: 0;
+    top: 0;
+    left: 0;
+    cursor: default;
+  } 
+ 
 .modal:target .modal-container,
 .modal.active .modal-container {
   animation: slide-down .2s ease 1;
@@ -2657,9 +2661,6 @@ summary.accordion-header::-webkit-details-marker {
   max-width: 320px;
   padding: 0 .4rem;
 }
-.modal.modal-lg .modal-overlay {
-  background: var(--color-background);
-}
 .modal.modal-lg .modal-container {
   box-shadow: none;
   max-width: 960px;
@@ -2667,6 +2668,7 @@ summary.accordion-header::-webkit-details-marker {
 
 .modal-container {
   background: var(--color-background);
+  border: 1px solid var(--color-borders);
   border-radius: .1rem;
   box-shadow: 0 .2rem .5rem rgba(var(--color-shadow-rgb), .3);
   display: flex;
