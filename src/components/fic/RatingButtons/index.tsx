@@ -1,33 +1,29 @@
 import type { MouseEvent } from "react";
 import {getRatingIcon} from "./RatingIcons"
+import type { Fic } from "../../../types/fic.ts";
 
 interface RatingProps{
-    rating: number,
+    fic: Fic,
     size: number,
     showAll: boolean,
-    editable: boolean
+    changeRating?: (e:MouseEvent, fic:Fic)=> void
 }
 
-
-const changeRating = function(e:MouseEvent){
-    console.log(e)
-}
-function RatingButtons({rating, size, showAll , editable= true} : RatingProps) {
+function RatingButtons({fic, size, showAll , changeRating} : RatingProps) {
     let styles = {};
-    if(document.documentElement.hasAttribute("data-bs-theme") && document.documentElement.getAttribute("data-bs-theme") === "dark"){
-        styles = {mixBlendMode: "difference",
-            opacity: 0.7}
-    }
+    const rating = fic.rating;
+    const editable = changeRating !== undefined;
+    
     if(!showAll){
         return ( 
-            <button className="btn btn-link text-decoration-none rating-button p-0" style={styles} onClick={changeRating}  disabled={!editable}>
+            <button className="btn btn-link text-decoration-none rating-button p-0" style={styles} data-rating={rating} >
                 {getRatingIcon(rating, size, false)}
                 </button>
                 
             )
         }
     else{
-        const nums = [-1,0,1,3,5]
+        const nums = [-1,1,2,3,5]
         let styles ={}
     
         return (
@@ -36,7 +32,7 @@ function RatingButtons({rating, size, showAll , editable= true} : RatingProps) {
                     let isBlank = i !== rating;
 
                     return ( 
-                    <button key={i} className="btn-icon s-circle p-0 rating-button"  onClick={changeRating}  disabled={!editable}>
+                    <button key={i} className="btn-icon s-circle p-0 rating-button" data-rating={i} onClick={(e:MouseEvent)=>{ if(changeRating){ changeRating(e, fic)} }}  disabled={!editable}>
                         {getRatingIcon(i, size, isBlank)}
                         </button>
                         

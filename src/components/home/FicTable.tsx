@@ -1,3 +1,4 @@
+import type { MouseEvent } from "react";
 import DataTable from 'react-data-table-component';
 import { type TableColumn } from 'react-data-table-component';
 import type { Fic, FicFieldTypes } from "../../types/fic.ts";
@@ -22,6 +23,15 @@ const FicTable = ({ fics, updateSelectedFic, toggleModal }: tableProps) => {
     let updatedFic: Fic = {...fic, read: updatedStatus }
     updateSelectedFic(updatedFic);
   }
+  const handleRatingChange=(e:MouseEvent,fic:Fic)=>{
+    let newRating = parseInt(e.currentTarget.getAttribute("data-rating") || "0");
+    const oldRating = fic.rating;
+    if(oldRating === newRating){
+      newRating = 0;
+    }
+     let updatedFic: Fic = {...fic, rating: newRating }
+    updateSelectedFic(updatedFic);
+  }
   const columns: TableColumn<Fic>[] = [
     {
       name: "",
@@ -42,7 +52,7 @@ const FicTable = ({ fics, updateSelectedFic, toggleModal }: tableProps) => {
       button: true,
       minWidth: "140px",
       maxWidth: "160px",
-      cell: row => { return (<RatingButtons rating={row.rating} size={18} showAll={true} editable={true} />) }
+      cell: row => { return (<RatingButtons fic={row} size={18} showAll={true} changeRating={ handleRatingChange} />) }
     },
     {
       name: "Read",
@@ -150,7 +160,7 @@ const FicTable = ({ fics, updateSelectedFic, toggleModal }: tableProps) => {
       },
       format: (row, i) => {
         let d = formatFicText("EstTime", row.word_count)
-        console.log(d); return d
+         return d
       }
     }
   ]

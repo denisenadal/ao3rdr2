@@ -1,3 +1,4 @@
+import type { MouseEvent } from "react";
 import type { Fic } from "../../types/fic.ts";
 import RatingButtons from "../../components/fic/RatingButtons"
 import ReadStatusToggle from "../../components/fic/ReadStatusToggle"
@@ -45,6 +46,12 @@ const FicModal = ({ fic, show, toggleModal, updateFic }: modalProps) => {
     </section>)
   }
 
+  const handleRatingChange=(e:MouseEvent,fic:Fic)=>{
+    console.log(e.currentTarget)
+    // let updatedFic: Fic = {...fic, read: updatedStatus }
+    // updateSelectedFic(updatedFic);
+  }
+
   function handleToggle(){
     toggleModal();
   }
@@ -67,7 +74,7 @@ const FicModal = ({ fic, show, toggleModal, updateFic }: modalProps) => {
               <ReadStatusToggle fic={fic} size={24} changeReadStatus={()=>{}} />
               </div>
               <div className="column">
-              <RatingButtons rating={fic.rating} size={24} showAll={true} editable={true} />
+              <RatingButtons fic={fic} size={18} showAll={true} changeRating={ handleRatingChange} />
               </div>
               <div className="column col-auto form-group text-right">
                 <p className="m-0 form-label">Visited</p>
