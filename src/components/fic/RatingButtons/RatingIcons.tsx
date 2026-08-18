@@ -76,13 +76,13 @@ const getRatingIcon = (rating: number, size: number, isBlank: boolean) => {
     switch (rating) {
         case -1:
             return hateIcon(size, isBlank)
-        case 0:
-            return dislikeIcon(size, isBlank)
         case 1:
+            return dislikeIcon(size, isBlank)
+        case 2:
             return neutralIcon(size, isBlank)
         case 3:
             return likeIcon(size, isBlank)
-        case 5:
+        case 4:
             return loveIcon(size, isBlank)
         default:
             return neutralIcon(size, isBlank)

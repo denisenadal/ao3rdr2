@@ -31,7 +31,8 @@
     
 #fic-table .rdt_row,
 #fic-table .rdt_row .rdt_TableCell,
-#fic-table .rdt_pagination{
+#fic-table .rdt_pagination,
+#fic-table .rdt_noData{
     background-color: var(--color-background)!important;
     border-color: transparent;
 }
@@ -39,3 +40,11 @@
 #fic-table .rdt_rowStriped .rdt_TableCell{
     background-color: rgba(var(--color-inputs-rgb),.5)!important;
 }
+/* stupid ass column filter labels */
+.rdt_TableCol_Sortable.rdt_columnSortable[data-column-id="rating"] + .rdt_filterContainer > .rdt_filterPanel::before {
+    content: "Filtering: Select 0 for unrated fics; -1 for blocked fics, and 1-4 for rated fics.";
+  }
+.rdt_TableCol_Sortable.rdt_columnSortable[data-column-id="read"] + .rdt_filterContainer > .rdt_filterPanel::before {
+    content: "Filtering: Select 0 for UNREAD fics, and 1 for READ";
+  }
+  

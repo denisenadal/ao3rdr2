@@ -9,7 +9,6 @@ import ReadStatusToggle from "../fic/ReadStatusToggle"
 import RatingButtons from "../fic/RatingButtons"
 import TagList from "../fic/TagList"
 import FicLinks from "../fic/FicLinks"
-// TODO fix filters for custom render fields
 //TODO add tag cell click event to add new tag
 interface tableProps {
   fics: Fic[],
@@ -62,9 +61,17 @@ const FicTable = ({ fics, updateSelectedFic, toggleModal }: tableProps) => {
       id: "rating",
       sortable: true,
       filterable: true,
-      minWidth: "100px",
-      maxWidth: "110px",
-      filterType: "number",
+      minWidth: "108px",
+      maxWidth: "112px",
+      filterType:"number",
+      filterFunction: (row, filter) => {
+        let rating= 0
+        let v = filter.condition1.value
+        if (v && v !== ""){
+          rating = typeof v === "string" ? parseInt(v) : v;
+        }
+        if(rating > 4 ){rating = 4}
+        return row.rating == rating;},
       sortFunction:(a,b)=>{ return a.rating - b.rating},
       cell: row => { return (<RatingButtons fic={row} size={18} showAll={true} changeRating={ handleRatingChange} />) }
     },
@@ -74,6 +81,14 @@ const FicTable = ({ fics, updateSelectedFic, toggleModal }: tableProps) => {
       sortable: true,
       filterable: true,
       filterType: "number",
+      filterFunction: (row, filter) => {
+        let read= 0;
+        let v = filter.condition1.value
+        if (v && v !== ""){
+          read = typeof v === "string" ? parseInt(v) : v;
+        }
+        if(read > 0 ){read = 1}
+        return row.read == read;},
       button: true,
       minWidth: "60px",
       maxWidth: "80px",
@@ -90,7 +105,10 @@ const FicTable = ({ fics, updateSelectedFic, toggleModal }: tableProps) => {
       ignoreRowClick: true,
       minWidth: "240px",
       maxWidth: "420px",
-      sortFunction:(a,b)=>{ const aname = typeof a.title  === "string" ? a.title.toLowerCase() : "";const bname =  typeof b.title  === "string"  ? b.title.toLowerCase() : ""; return (aname.localeCompare(bname.toLowerCase(), undefined, { sensitivity: 'base' })) },
+      filterFunction: (row, filter) => {
+        const term = (filter.condition1.value ?? '').toLowerCase();
+        return row.title.toLowerCase().includes(term);},
+      sortFunction:(a,b)=>{ const aname = typeof a.title  === "string" ? a.title.toLowerCase() : "";const bname =  typeof b.title  === "string"  ? b.title.toLowerCase() : ""; return (aname.localeCompare(bname, undefined, { sensitivity: 'base' })) },
       cell: row => { return (<FicLinks linkType="work" items={row.title} ao3id={row.ao3id} />) }
     },
     {
@@ -102,7 +120,17 @@ const FicTable = ({ fics, updateSelectedFic, toggleModal }: tableProps) => {
       ignoreRowClick: true,
       minWidth: "100px",
       maxWidth: "200px",
-      sortFunction:(a,b)=>{ const aname = typeof a.author  === "string" ? a.author.toLowerCase() : "";const bname =  typeof b.author  === "string"  ? b.author.toLowerCase() : ""; return (aname.localeCompare(bname.toLowerCase(), undefined, { sensitivity: 'base' })) },
+      filterType:"text",
+      filterFunction: (row, filter) => {
+        if(!row.author){return false;}
+        let a:string = row.author;
+        if(Array.isArray(row.author) ){
+          a = row.author.toString();
+        }
+        const term:string = (filter.condition1.value ?? '').toLowerCase();
+        return a.toLowerCase().includes(term)
+        return false},
+      sortFunction:(a,b)=>{ const aname = typeof a.author  === "string" ? a.author.toLowerCase() : "";const bname =  typeof b.author  === "string"  ? b.author.toLowerCase() : ""; return (aname.localeCompare(bname, undefined, { sensitivity: 'base' })) },
       cell: row => { return (<FicLinks linkType="user" items={row.author} ao3id={row.ao3id} />) }
 
     },
@@ -115,6 +143,16 @@ const FicTable = ({ fics, updateSelectedFic, toggleModal }: tableProps) => {
       ignoreRowClick: true,
       minWidth: "160px",
       maxWidth: "280px",
+      filterType:"text",
+      filterFunction: (row, filter) => {
+        if(!row.fandom){return false;}
+        let f:string = row.fandom;
+        if(Array.isArray(row.fandom) ){
+          f = row.fandom.toString();
+        }
+        const term:string = (filter.condition1.value ?? '').toLowerCase();
+        return f.toLowerCase().includes(term)
+        return false},
       sortFunction:(a,b)=>{ const aname = typeof a.fandom  === "string" ? a.fandom.toLowerCase() : "";const bname =  typeof b.fandom  === "string"  ? b.fandom.toLowerCase() : ""; return (aname.localeCompare(bname, undefined, { sensitivity: 'base' })) },
       cell: row => { return (<FicLinks linkType="tag" items={row.fandom} ao3id={row.ao3id} />) }
 
@@ -128,6 +166,16 @@ const FicTable = ({ fics, updateSelectedFic, toggleModal }: tableProps) => {
       ignoreRowClick: true,
       minWidth: "140px",
       maxWidth: "280px",
+      filterType:"text",
+      filterFunction: (row, filter) => {
+        if(!row.relationship){return false;}
+        let r:string = row.relationship;
+        if(Array.isArray(row.relationship) ){
+          r = row.relationship.toString();
+        }
+        const term:string = (filter.condition1.value ?? '').toLowerCase();
+        return r.toLowerCase().includes(term)
+        return false},
       sortFunction:(a,b)=>{ const aname = typeof a.relationship  === "string" ? a.relationship.toLowerCase() : "";const bname =  typeof b.relationship  === "string"  ? b.relationship.toLowerCase() : ""; return (aname.localeCompare(bname, undefined, { sensitivity: 'base' })) },
       cell: row => { return (<FicLinks linkType="tag" items={row.relationship} ao3id={row.ao3id} />) }
     },
@@ -196,7 +244,7 @@ const FicTable = ({ fics, updateSelectedFic, toggleModal }: tableProps) => {
 
 
   return (<section id="fic-table" className="table-section">
-    <DataTable columns={columns} data={fics} keyField="ao3id" pagination={true} defaultSortFieldId="visit" defaultSortAsc={false} theme="default" striped={true} />;
+    <DataTable columns={columns} data={fics} keyField="ao3id" pagination={true} defaultSortFieldId="visit" defaultSortAsc={false} theme="default" striped={true}  />;
   </section>
   )
 }

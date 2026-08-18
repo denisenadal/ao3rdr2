@@ -23,7 +23,7 @@ function RatingButtons({fic, size, showAll , changeRating} : RatingProps) {
             )
         }
     else{
-        const nums = [-1,1,2,3,5]
+        const nums = [-1,1,2,3,4]
         let styles ={}
     
         return (
