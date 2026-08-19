@@ -1,10 +1,14 @@
-const prefs = {
+import type {settingsData} from "../components/Settings/settingTypes.ts"
+
+const defaultSettings = {
+    "ao3": {
     "autofilter": true,
     "hideDislikes": true,
-    "last_sync": 1579408734.656,
-    "sync_enabled": true,
-    "hello_bar": {},
-    "hello_bar_dismissed": 0,
+    },
+    "rdr": {
+    "autofilter": true,
+    "hideDislikes": true,
+    },
     "user_id": "080b7013-14b2-4fd8-be8b-f567db3cdb39",
     "blockedTags": [
       "modern au",
@@ -16,5 +20,5 @@ const prefs = {
       "Omega Verse",
       "Mpreg"
     ]
-  };
-export default prefs;
+  } as settingsData;
+export default defaultSettings;

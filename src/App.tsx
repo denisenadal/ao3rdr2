@@ -1,5 +1,8 @@
 import {BrowserRouter as Router,Routes, Route } from "react-router-dom";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
+import type {settingsData} from "./components/Settings/settingTypes.ts"
+
+
 import Home from "./routes/Home"
 import Backup from "./routes/Backup"
 import Styles from "./routes/Styles"
@@ -8,6 +11,8 @@ import Header from "./components/Header"
 import './assets/spectre-fork.css'
 import '@spectre-org/spectre-css/dist/spectre-exp.css'
 import './assets/global.css'
+
+import defaultSettings from "./temp/settings"
 
 
 
@@ -19,13 +24,16 @@ function App(){
       document.documentElement.setAttribute("data-bs-theme","dark")
     }
   })
+
+  const [settings, updateSettings] = useState(defaultSettings);
+
   
   return (
   <Router>
-        <Header />
+        <Header settings={settings}/>
         <main className="container grid-xxl d-flex">
         <Routes>
-          <Route path="/" element={<Home />} ></Route>
+          <Route path="/" element={<Home settings={settings} />} ></Route>
           <Route path="/backup" element={<Backup />}></Route>
           <Route path="/about"></Route>
           <Route path="/styles" element={<Styles />}></Route>

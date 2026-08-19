@@ -3,11 +3,15 @@ import { useState} from "react";
 import FicTable from "../../components/fic/FicTable";
 import FicModal from "../../components/fic/FicModal";
 import type { Fic,FicUpdate } from "../../components/fic/ficTypes.ts";
-
+import type {settingsData} from "../../components/Settings/settingTypes.ts"
 import fics from "../../temp/fics"
 
+interface homeProps{
+  settings: settingsData
+}
 
-function Home() {  
+function Home({settings}:homeProps) {  
+  //TODO use settings to update table display.
   const [ficList, updateFicList] = useState(fics);
   const [modalState, updateModalState] = useState({
     show: false,

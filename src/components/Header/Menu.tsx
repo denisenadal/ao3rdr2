@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { type Panel} from "../../lib/routes.ts"
+import { RouteData, type Panel} from "../../lib/routes.ts"
 import Icon from "../Icon"
 
 interface menuProps{
@@ -16,11 +16,11 @@ function Menu({active,onClose}:menuProps){
             </button>
             <ul id="sidebar-id" className={"off-canvas-sidebar bg-background "+(active ? "active":"")} >
                 <li className="nav-item-wrapper">
-                    <NavLink to="home" className="nav-item" >
+                    <NavLink to="/" className="nav-item" >
                     <Icon name="home" size={16} /> Home</NavLink>
                 </li>
                 <li className="nav-item-wrapper">
-                    <a href="#" className="nav-item" onClick={()=>{if(onClose)onClose("settings")}}>
+                    <a href="#" className="nav-item" onClick={(e)=>{e.preventDefault;if(onClose)onClose("settings")}}>
                     <Icon name="settings" size={16} /> Settings
                     </a>
                 </li>
