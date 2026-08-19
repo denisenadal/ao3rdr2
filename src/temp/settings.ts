@@ -2,11 +2,11 @@ import type {settingsData} from "../components/Settings/settingTypes.ts"
 
 const defaultSettings = {
     "ao3": {
-    "autofilter": true,
+    "filterBlockedTags": true,
     "hideDislikes": true,
     },
     "rdr": {
-    "autofilter": true,
+    "filterBlockedTags": true,
     "hideDislikes": true,
     },
     "user_id": "080b7013-14b2-4fd8-be8b-f567db3cdb39",

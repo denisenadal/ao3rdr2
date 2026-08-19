@@ -1,7 +1,8 @@
-import type { MouseEvent, useRef } from "react";
-import DataTable from 'react-data-table-component';
+import{ type MouseEvent, useState } from "react";
+import DataTable,{ type FilterState} from 'react-data-table-component';
 import { type TableColumn } from 'react-data-table-component';
 import type { Fic,FicUpdate } from "../ficTypes.ts";
+import {type settingsData} from "../../Settings/settingTypes"
 import { formatFicText, getEstTime } from "../ficFormatters.ts"
 import Icon from "../../Icon.tsx"
 import ReadStatusToggle from "../fields/ReadStatusToggle"
@@ -14,24 +15,12 @@ interface tableProps {
   fics: Fic[],
   updateSelectedFic: (update:FicUpdate|string) => void,
   toggleModal: (fic: Fic) => void;
+  settings: settingsData
 }
 
-const FicTable = ({ fics, updateSelectedFic, toggleModal }: tableProps) => {
+const FicTable = ({ fics, updateSelectedFic, toggleModal, settings }: tableProps) => {
   const minDefault = "30px"
-
-  const handleRatingChange=(e:MouseEvent,fic:Fic)=>{
-   
-  }
-  function handleRemoveTag(e:MouseEvent, fic?: Fic | undefined) {
-    if (!fic) { return; }
-    const tags = fic.personal_tags || []
-    if (tags.length === 0) { return }
-    let tag = e.currentTarget.getAttribute("data-tag") || "";
-    if(tag ==="" ){return}
-
-    const updatedTags = tags.filter((t: string) => { return t !== tag })
-    const updatedFic = { ...fic, personal_tags: updatedTags }
-  }
+  
   const columns: TableColumn<Fic>[] = [
     {
       name: "",
@@ -232,7 +221,7 @@ const FicTable = ({ fics, updateSelectedFic, toggleModal }: tableProps) => {
 
 
   return (<section id="fic-table" className="table-section">
-    <DataTable columns={columns} data={fics} keyField="ao3id" pagination={true} defaultSortFieldId="visit" defaultSortAsc={false} theme="default" striped={true}  />;
+    <DataTable columns={columns} data={fics} keyField="ao3id" pagination={true} defaultSortFieldId="visit" defaultSortAsc={false} theme="default" striped={true}  />
   </section>
   )
 }

@@ -77,6 +77,10 @@
         color: var(--color-foreground);
         background: var(--color-inputs);
     }
+    #fic-table .rdt_noData,
+    #fic-table .rdt_noData *{
+        color:var(--color-foreground)
+    }
 }
 #fic-table .rdt_body,
 #fic-table .rdt_row,
@@ -97,4 +101,4 @@
 .rdt_TableCol_Sortable.rdt_columnSortable[data-column-id="read"] + .rdt_filterContainer > .rdt_filterPanel::before {
     content: "Filtering: Select 0 for UNREAD fics, and 1 for READ";
   }
-  
+  /* TODO darkmode filters */

@@ -4,7 +4,6 @@ import type {settingsData} from "./components/Settings/settingTypes.ts"
 
 
 import Home from "./routes/Home"
-import Backup from "./routes/Backup"
 import Styles from "./routes/Styles"
 import Header from "./components/Header"
 
@@ -36,7 +35,6 @@ function App(){
         <main className="container grid-xxl d-flex">
         <Routes>
           <Route path="/" element={<Home settings={settings} />} ></Route>
-          <Route path="/backup" element={<Backup />}></Route>
           <Route path="/about"></Route>
           <Route path="/styles" element={<Styles />}></Route>
         </Routes>

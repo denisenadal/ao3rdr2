@@ -11,12 +11,14 @@ interface homeProps{
 }
 
 function Home({settings}:homeProps) {  
-  //TODO use settings to update table display.
   const [ficList, updateFicList] = useState(fics);
   const [modalState, updateModalState] = useState({
     show: false,
     fic: fics[0]
   })
+  const displayedFics = settings.rdr.hideDislikes
+  ? ficList.filter(fic => fic.rating !== -1)
+  : ficList
 
 
   const updateSelectedFic = (update:FicUpdate|string) => {
@@ -41,7 +43,7 @@ function Home({settings}:homeProps) {
 
   return (
     <>
-      <FicTable fics={ficList} updateSelectedFic={updateSelectedFic}  toggleModal={updateModalVisibility} />
+      <FicTable fics={displayedFics} updateSelectedFic={updateSelectedFic}  toggleModal={updateModalVisibility} settings={settings} />
       <FicModal fic={modalState.fic} show={modalState.show} toggleModal={updateModalVisibility} updateFic={updateSelectedFic} /> 
     </>
   )
