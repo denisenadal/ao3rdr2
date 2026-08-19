@@ -1,55 +1,35 @@
-import type { MouseEvent } from "react";
-import type { Fic } from "../../types/fic.ts";
-import RatingButtons from "../../components/fic/RatingButtons"
-import ReadStatusToggle from "../../components/fic/ReadStatusToggle"
-import FicLinks from "../../components/fic/FicLinks"
-import {formatFicText} from "../fic/ficHelpers.ts"
-import Button from "../../components/Button"
-import TagList from "../../components/fic/TagList"
-import Icon from "../../components/Icon"
+import Button from "../../Button/index.tsx"
+import Icon from "../../Icon.tsx"
+
+import type { Fic, FicUpdate } from "../ficTypes.ts";
+import {formatFicText} from "../ficFormatters.ts"
+import RatingButtons from "../fields/RatingButtons/index.tsx"
+import ReadStatusToggle from "../fields/ReadStatusToggle"
+import FicLinks from "../fields/FicLinks.tsx"
+import TagList from "../fields/TagList.tsx"
+import FicNotes from "../fields/FicNotes.tsx"
+
 import "./modal.css"
+
 interface modalProps {
   fic: Fic,
   show: boolean,
   toggleModal: () => void,
-  updateFic: (fic:Fic)=>void
+  updateFic: (update:FicUpdate)=>void
 }
 
 const FicModal = ({ fic, show, toggleModal, updateFic }: modalProps) => {
   const chapterString = fic.chapters.published + "/" + fic.chapters.total
 
-  function removeTag(tag:string){
-    const tags = fic.personal_tags || []
-    if(tags.length === 0){
-      return
-    }
-    const updatedTags = tags.filter((t:string)=>{return t !==tag})
-    const updatedFic = {...fic,personal_tags:updatedTags}
-    updateFic(updatedFic);
-  }
-
-  function addTag(tag:string){
-    const tags = fic.personal_tags || []
-   if(tags.includes(tag)){
-    return
-   }
-    const updatedTags = [...tags,tag]
-    const updatedFic = {...fic,personal_tags:updatedTags}
-    updateFic(updatedFic);
-  }
 
   function renderTags(tags?:string[] ){
-    if(fic.personal_tags)
-    return (<section className="columns form-group editable">
+     if(fic.personal_tags ){
+      return (
+    <section className="columns form-group editable">
       <label className="m-0 form-label col-11" >Personal Tags</label>
-      <TagList tags={tags} size="md" removeTag={removeTag} addTag={addTag} />
-    </section>)
-  }
-
-  const handleRatingChange=(e:MouseEvent,fic:Fic)=>{
-    console.log(e.currentTarget)
-    // let updatedFic: Fic = {...fic, read: updatedStatus }
-    // updateSelectedFic(updatedFic);
+      <TagList fic={fic} tags={tags} size="md" updateTags={updateFic} />
+    </section> 
+      )}
   }
 
   function handleToggle(){
@@ -64,17 +44,17 @@ const FicModal = ({ fic, show, toggleModal, updateFic }: modalProps) => {
             <button className="btn btn-ghost s-circle p-absolute" style={{top:".5rem",right:0}} aria-label="Close" onClick={handleToggle}>
               <Icon name="close" className="close-modal btn-icon" />
             </button>
-            <section className="flex-column d-flex columns">
+            <section className="fic-meta flex-column d-flex columns">
               <h2 id="fm-heading" className="modal-title m-0 h4">{fic.title}</h2>
               <p id="fm-author" className="m-0">{fic.author}</p>
             </section>
             <section className="columns">
               
-              <div className="column col-auto">
-              <ReadStatusToggle fic={fic} size={24} changeReadStatus={()=>{}} />
+              <div className="fic-controls column col-auto">
+              <ReadStatusToggle fic={fic} size={24} changeReadStatus={updateFic} />
               </div>
               <div className="column">
-              <RatingButtons fic={fic} size={18} showAll={true} changeRating={ handleRatingChange} />
+              <RatingButtons fic={fic} size={18} showAll={true} changeRating={updateFic} />
               </div>
               <div className="column col-auto form-group text-right">
                 <p className="m-0 form-label">Visited</p>
@@ -118,12 +98,12 @@ const FicModal = ({ fic, show, toggleModal, updateFic }: modalProps) => {
 
             <section className="columns form-group">
               <label className="m-0 form-label col-11" >Notes</label>
-              <textarea name="notes" id="fm-notes" className="form-input col-12 editable"></textarea>
+              <FicNotes fic={fic} updateNotes={updateFic} />
             </section>
             {renderTags(fic.personal_tags)}
           </main>
           <footer id="fm-footer" className="modal-footer">
-            <Button color="info" variant="muted" onClick={()=>window.alert("hello")}>Click Me</Button>
+            <Button color="secondary" variant="muted" onClick={handleToggle} label="Close" />
           </footer>
         </dialog>
     </section>

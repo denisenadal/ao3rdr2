@@ -1,37 +1,26 @@
-import type { MouseEvent } from "react";
-import DataTable,{ type TableStyles } from 'react-data-table-component';
+import type { MouseEvent, useRef } from "react";
+import DataTable from 'react-data-table-component';
 import { type TableColumn } from 'react-data-table-component';
-import type { Fic } from "../../types/fic.ts";
-import { formatFicText, getEstTime } from "../fic/ficHelpers.ts"
-import Icon from "../Icon"
-import Button  from "../Button";
-import ReadStatusToggle from "../fic/ReadStatusToggle"
-import RatingButtons from "../fic/RatingButtons"
-import TagList from "../fic/TagList"
-import FicLinks from "../fic/FicLinks"
+import type { Fic,FicUpdate } from "../ficTypes.ts";
+import { formatFicText, getEstTime } from "../ficFormatters.ts"
+import Icon from "../../Icon.tsx"
+import ReadStatusToggle from "../fields/ReadStatusToggle"
+import RatingButtons from "../fields/RatingButtons"
+import TagList from "../fields/TagList.tsx"
+import FicLinks from "../fields/FicLinks.tsx"
+import "./table.css"
 //TODO add tag cell click event to add new tag
 interface tableProps {
   fics: Fic[],
-  updateSelectedFic: (fic: Fic) => void,
+  updateSelectedFic: (update:FicUpdate) => void,
   toggleModal: (fic: Fic) => void;
 }
 
 const FicTable = ({ fics, updateSelectedFic, toggleModal }: tableProps) => {
   const minDefault = "30px"
 
-  const handleReadChange=(fic:Fic)=>{
-    const updatedStatus: number = fic.read === 0 ? 1 :0; 
-    let updatedFic: Fic = {...fic, read: updatedStatus }
-    updateSelectedFic(updatedFic);
-  }
   const handleRatingChange=(e:MouseEvent,fic:Fic)=>{
-    let newRating = parseInt(e.currentTarget.getAttribute("data-rating") || "0");
-    const oldRating = fic.rating;
-    if(oldRating === newRating){
-      newRating = 0;
-    }
-     let updatedFic: Fic = {...fic, rating: newRating }
-    updateSelectedFic(updatedFic);
+   
   }
   function handleRemoveTag(e:MouseEvent, fic?: Fic | undefined) {
     if (!fic) { return; }
@@ -42,7 +31,6 @@ const FicTable = ({ fics, updateSelectedFic, toggleModal }: tableProps) => {
 
     const updatedTags = tags.filter((t: string) => { return t !== tag })
     const updatedFic = { ...fic, personal_tags: updatedTags }
-    updateSelectedFic(updatedFic);
   }
   const columns: TableColumn<Fic>[] = [
     {
@@ -53,27 +41,8 @@ const FicTable = ({ fics, updateSelectedFic, toggleModal }: tableProps) => {
       minWidth: minDefault,
       maxWidth: "44px",
       cell: (row) => {
-        return (<Button color="primary" variant="ghost" className="s-circle" onClick={() => { toggleModal(row) }}><Icon name="open" size={18} /></Button>)
+        return (<button color="primary"  className="btn-ghost s-circle" onClick={() => { toggleModal(row) }}><Icon name="open" size={18} /></button>)
       }
-    },
-    {
-      name: "Rating",
-      id: "rating",
-      sortable: true,
-      filterable: true,
-      minWidth: "108px",
-      maxWidth: "112px",
-      filterType:"number",
-      filterFunction: (row, filter) => {
-        let rating= 0
-        let v = filter.condition1.value
-        if (v && v !== ""){
-          rating = typeof v === "string" ? parseInt(v) : v;
-        }
-        if(rating > 4 ){rating = 4}
-        return row.rating == rating;},
-      sortFunction:(a,b)=>{ return a.rating - b.rating},
-      cell: row => { return (<RatingButtons fic={row} size={18} showAll={true} changeRating={ handleRatingChange} />) }
     },
     {
       name: "Read",
@@ -93,7 +62,26 @@ const FicTable = ({ fics, updateSelectedFic, toggleModal }: tableProps) => {
       minWidth: "60px",
       maxWidth: "80px",
       sortFunction:(a,b)=>{ return a.read - b.read},
-      cell: row => { return (<ReadStatusToggle fic={row} size={18} changeReadStatus={()=>{handleReadChange(row)}} />) }
+      cell: row => { return (<ReadStatusToggle fic={row} size={18} changeReadStatus={updateSelectedFic} />) }
+    },
+    {
+      name: "Rating",
+      id: "rating",
+      sortable: true,
+      filterable: true,
+      minWidth: "108px",
+      maxWidth: "112px",
+      filterType:"number",
+      filterFunction: (row, filter) => {
+        let rating= 0
+        let v = filter.condition1.value
+        if (v && v !== ""){
+          rating = typeof v === "string" ? parseInt(v) : v;
+        }
+        if(rating > 4 ){rating = 4}
+        return row.rating == rating;},
+      sortFunction:(a,b)=>{ return a.rating - b.rating},
+      cell: row => { return (<RatingButtons fic={row} size={18} showAll={true} changeRating={updateSelectedFic} />) }
     },
     {
       name: "Title",
@@ -193,7 +181,7 @@ const FicTable = ({ fics, updateSelectedFic, toggleModal }: tableProps) => {
         const btag = b.personal_tags && b.personal_tags.length > 0 ? b.personal_tags[0].toLowerCase(): ""; 
         return (atag.localeCompare(btag, undefined, { sensitivity: 'base' }))
        },
-      cell: row => { return (<TagList fic={row} tags={row.personal_tags} size="sm" addTag={() => { }}  removeTag={(e)=>{handleRemoveTag(e,row)}}  />) }
+      cell: row => { return (<TagList fic={row} tags={row.personal_tags} size="sm" updateTags={updateSelectedFic}  />) }
 
     },
     {

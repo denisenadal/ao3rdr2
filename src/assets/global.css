@@ -1,34 +1,50 @@
-@import url('https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100..900;1,100..900&display=swap');:root,
-#root {
+@import url('https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+/* AO3 red brand palette. Light-only so theme-dark.css can own dark-mode primaries.
+   Define tokens on :root (html), not #root — React mounts inside #root, so values
+   set there never inherit dark-mode updates from :root. */
+  :root {
     --primary-025-rgb: 255, 245, 242;
     --primary-025: rgb(var(--primary-025-rgb));
     --primary-050-rgb: 254, 224, 215;
     --primary-050: rgb(var(--primary-050-rgb));
     --primary-100-rgb: 254, 199, 187;
-    --primary-100-rgb: rgb(var(--primary-100-rgb));
-    --primary-100: rgb(var(--primary-100-rgb));    
+    --primary-100: rgb(var(--primary-100-rgb));
     --primary-200-rgb: 254, 168, 160;
-    --primary-200: rgb(var(--primary-200-rgb));    
+    --primary-200: rgb(var(--primary-200-rgb));
     --primary-300-rgb: 245, 142, 129;
-    --primary-300: rgb(var(--primary-300-rgb));    
+    --primary-300: rgb(var(--primary-300-rgb));
     --primary-400-rgb: 222, 78, 69;
-    --primary-400: rgb(var(--primary-400-rgb));    
+    --primary-400: rgb(var(--primary-400-rgb));
     --primary-500-rgb: 176, 18, 18;
-    --primary-500: rgb(var(--primary-500-rgb));    
+    --primary-500: rgb(var(--primary-500-rgb));
     --primary-600-rgb: 142, 6, 6;
-    --primary-600: rgb(var(--primary-600-rgb));    
+    --primary-600: rgb(var(--primary-600-rgb));
     --primary-700-rgb: 107, 3, 3;
-    --primary-700: rgb(var(--primary-700-rgb));    
+    --primary-700: rgb(var(--primary-700-rgb));
     --primary-800-rgb: 73, 1, 1;
-    --primary-800: rgb(var(--primary-800-rgb));    
+    --primary-800: rgb(var(--primary-800-rgb));
     --primary-900-rgb: 38, 0, 0;
     --primary-900: rgb(var(--primary-900-rgb));
-}
+  }
 body {
     font-family: "Public Sans", sans-serif;
     background: var(--color-background);
     color: var(--color-foreground);
     font-size: 14px;
+}
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="file"]):not([type="color"]),
+textarea,
+select,
+.form-input,
+.form-select {
+    color: var(--color-foreground);
+    background-color: var(--color-inputs);
+    -webkit-text-fill-color: var(--color-foreground);
+}
+.form-input::placeholder {
+    color: var(--color-gray);
+    -webkit-text-fill-color: var(--color-gray);
 }
 h1,.h1 {
     font-weight: 700;
@@ -40,50 +56,6 @@ a,.btn{
     display: flex;
     flex-direction: column;
 }
-.navbar {
-    padding-top: 2rem;
-    padding-bottom: 1rem;
-}
-.navbar>div {
-    align-items: stretch;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    font-weight: 500;
-}
-
-.navbar .navbar-brand {
-    text-decoration: none;
-    line-height: 1;
-}
-.navbar .rightCol {
-    align-items: flex-end;
-    overflow: visible;
-}
-.navbar .off-canvas {
-    width: auto;
-  }
-.navbar .off-canvas .off-canvas-toggle {
-    top: 0;
-    right: 0;
-    z-index: 201;
-    position: relative;
-  }
-  #sidebar-id {
-    margin: 0;
-    padding: 2rem 1rem;
-    display: flex;
-    flex-direction: column;
-    list-style: none;
-  }
-  .off-canvas .off-canvas-sidebar {
-    background: var(--color-background);
-    border-right: 1px solid var(--color-borders);
-    right: 0;
-    left: auto;
-    transform: translateX(100%);
-    list-style: none;
-  }
 .container.grid-xxl {
     max-width: 1600px;
     margin: auto;
@@ -94,15 +66,4 @@ a,.btn{
     .container.grid-xxl {
         padding: 0 2rem;
     }
-}
-
-.read-button{
-    background: transparent;
-    border:none;
-}
-.read-button:hover svg *[fill="var(--color-foreground)"]{
-    fill: var(--color-primary)
-}
-.read-button:hover svg *[fill="var(--color-background)"]{
-    fill: rgba(var(--color-primary-rgb),.06)
 }

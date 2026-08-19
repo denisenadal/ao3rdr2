@@ -1,5 +1,6 @@
-import { stringToArray } from "../../lib/format"
-import { formatTagLabel, getFicUrl, isUnknown, type LinkType } from "./ficHelpers"
+import { stringToArray } from "../../../lib/format"
+import { getFicUrl, isUnknown } from "../ficFormatters"
+import  type {LinkType} from "../ficTypes"
 
 interface ficLinkProps {
     items: string | string[];

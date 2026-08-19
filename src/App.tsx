@@ -4,7 +4,6 @@ import Home from "./routes/Home"
 import Backup from "./routes/Backup"
 import Styles from "./routes/Styles"
 import Header from "./components/Header"
-// import "./../node_modules/bootstrap/dist/css/bootstrap.min.css"
 
 import './assets/spectre-fork.css'
 import '@spectre-org/spectre-css/dist/spectre-exp.css'
@@ -28,7 +27,6 @@ function App(){
         <Routes>
           <Route path="/" element={<Home />} ></Route>
           <Route path="/backup" element={<Backup />}></Route>
-          <Route path="/preferences"></Route>
           <Route path="/about"></Route>
           <Route path="/styles" element={<Styles />}></Route>
         </Routes>

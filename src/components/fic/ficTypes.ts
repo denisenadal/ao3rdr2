@@ -1,9 +1,18 @@
+export type LinkType = "user" | "tag" | "work";
+export type FicUpdate ={
+  fic: Fic,
+  update:{}
+}
+export type textType = "XLDate"|"LongDate"| 
+"MedDate" | "ShortDate" | "WordCount" | "EstTime" | "Summary" | "Generic"
 export type FicChapters = {
   published: number;
   total: number;
   complete: number;
 };
 export type FicFieldTypes = number | string | boolean | string[] | FicChapters
+export type FicField = keyof Fic;
+
 /** Bookmarked fic row from AO3rdr backup / sync data. */
 export type Fic = {
   ao3id: number;
@@ -43,6 +52,7 @@ export type Fic = {
   hasupdate__ts: number | string;
   chapter_id: string;
   chapter_id__ts: number;
+  notes?:string
 };
 
 

@@ -1,13 +1,6 @@
 const prefs = {
     "autofilter": true,
     "hideDislikes": true,
-    "tags": [
-      "podfic",
-      "modern au",
-      "coffeeshop",
-      "Alternate Universe - High School",
-      "coffee shop"
-    ],
     "last_sync": 1579408734.656,
     "sync_enabled": true,
     "hello_bar": {},

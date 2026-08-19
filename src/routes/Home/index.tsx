@@ -1,9 +1,8 @@
 import { useState} from "react";
 
-import "./Home.css"
-import FicTable from "../../components/home/FicTable";
-import FicModal from "../../components/home/FicModal";
-import type { Fic } from "../../types/fic.ts";
+import FicTable from "../../components/fic/FicTable";
+import FicModal from "../../components/fic/FicModal";
+import type { Fic,FicUpdate } from "../../components/fic/ficTypes.ts";
 
 import fics from "../../temp/fics"
 
@@ -16,7 +15,8 @@ function Home() {
   })
 
 
-  const updateSelectedFic = (fic: Fic) => {
+  const updateSelectedFic = (update:FicUpdate) => {
+    let fic = {...update.fic,...update.update}
     updateFicList(ficList.map(f =>
       f.ao3id === fic.ao3id ? fic : f
     ));

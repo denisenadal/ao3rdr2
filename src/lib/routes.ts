@@ -1,9 +1,8 @@
 
-const RouteData = [
+export const RouteData = [
     {"label":"Home", path: "/"},
     {"label":"Backup", path: "/backup"},
-    {"label":"Preferences", path: "/preferences"},
     {"label":"About/Help", path: "/about"}
 ];
 
-export default RouteData
+export type Panel = "menu"| "settings" | "backup" | "none"

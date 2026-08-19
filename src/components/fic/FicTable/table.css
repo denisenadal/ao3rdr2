@@ -13,6 +13,21 @@
     --rdt-border-radius: 8px;
     --rdt-font-size: 12px;
 }
+@media (prefers-color-scheme: dark){
+    :root,
+#fic-table {
+    --rdt-color-scheme: dark;
+    --rdt-color-striped: var(--gs-800);
+    --rdt-color-striped-text: var(--color-foreground);
+    --rdt-color-divider: var(--gs-700);
+    --rdt-color-highlight: var(--gs-000);
+    --rdt-color-highlight-text: var(--color-foreground);
+    --rdt-color-selected: var(--gs-600);
+    --rdt-color-selected-text: var(--color-foreground);
+    --rdt-color-text-secondary: var(--gs-400);
+    --rdt-color-btn: var(--gs-400);
+}
+}
 .rdt_cellBaseHead[data-column-id="visit"] {
     padding-right: 18px;
   }
@@ -28,7 +43,42 @@
 .rdt_TableCell a {
     color: var(--color-shadow);
 }
-    
+@media (prefers-color-scheme: dark){
+    .rdt_TableCell a,
+    #fic-table .rdt_filterIcon,
+    #fic-table .rdt_paginationButton,
+    #fic-table .rdt_selectControl+svg {
+        color: var(--gs-400);
+    }
+    .rdt_TableCell a:hover,
+    #fic-table .rdt_filterIcon:hover,
+    #fic-table .rdt_paginationButton:hover {
+        color: var(--primary-400);
+        border-color: var(--primary-400);
+    }
+    .rdt_cellBase,
+    .rdt_pagination.rdt_Pagination{
+        color:var(--gs-300)
+    }
+    .rdt_selectWrapper{
+        overflow: visible;
+  border-radius: 0;
+  border: none;
+    }
+    #fic-table .rdt_filterInput,
+    #fic-table .rdt_filterSelect,
+    #fic-table .rdt_selectControl,
+    #fic-table .rdt_editInput {
+        color: var(--color-foreground);
+        background: var(--color-inputs);
+        -webkit-text-fill-color: var(--color-foreground);
+    }
+    #fic-table .rdt_selectControl option {
+        color: var(--color-foreground);
+        background: var(--color-inputs);
+    }
+}
+#fic-table .rdt_body,
 #fic-table .rdt_row,
 #fic-table .rdt_row .rdt_TableCell,
 #fic-table .rdt_pagination,

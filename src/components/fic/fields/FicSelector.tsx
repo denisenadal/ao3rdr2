@@ -1,4 +1,4 @@
-import type { Fic } from "../../types/fic.ts";
+import type { Fic } from "../ficTypes.ts";
 
 interface fsProps{
     fic: Fic,

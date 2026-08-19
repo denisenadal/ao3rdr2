@@ -6,3 +6,10 @@
 .rating-button:hover svg *[fill="none"]{
   fill: rgba(var(--color-primary-rgb),.36)
 }
+
+.rating-button .rating-radio {
+  opacity: 0;
+}
+/* .rating-button label{
+  left:0
+} */

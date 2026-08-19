@@ -1,8 +1,4 @@
 import { formatDate, stringToArray} from "../../lib/format"
-type LinkType = "user" | "tag" | "work";
-
-type textType = "XLDate"|"LongDate"| 
-"MedDate" | "ShortDate" | "WordCount" | "EstTime" | "Summary" | "Generic"
 
 const formatTagUrl = (tagName: string) => {
     tagName = tagName.replaceAll("/", "*s*");
@@ -79,4 +75,4 @@ function getFicUrl(linkType:string, item:string, ao3id:number|null|string){
 function isUnknown(linkType:string,val:string ){
     return val === "" ||val === "?" || linkType === "user" && val == "Anonymous" || linkType === "tag" && val == "..."
 }
-export {formatFicText, formatTagLabel, formatTagUrl, getFicUrl,getEstTime, type textType,isUnknown, type LinkType}
+export {formatFicText, formatTagLabel, formatTagUrl, getFicUrl,getEstTime, isUnknown,}
