@@ -11,6 +11,12 @@ const stringToArray = (str: string) => {
     return arr;
 }
 
+const capitalize =(str:string)=>{
+    let first = str[0]
+    let rest = str.slice(1)
+    return first.toUpperCase() + rest.toLowerCase()
+}
+
 const formatDate = (ts: number | string, format: string) => {
     let dt = typeof ts === "string" ? parseInt(ts) : ts;
     let z = Intl.DateTimeFormat().resolvedOptions().timeZone
@@ -34,4 +40,4 @@ const formatDate = (ts: number | string, format: string) => {
     return d2
 }
 
-export {stringToArray,   formatDate }
+export {stringToArray, capitalize,  formatDate }

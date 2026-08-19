@@ -12,7 +12,7 @@ import "./table.css"
 //TODO add tag cell click event to add new tag
 interface tableProps {
   fics: Fic[],
-  updateSelectedFic: (update:FicUpdate) => void,
+  updateSelectedFic: (update:FicUpdate|string) => void,
   toggleModal: (fic: Fic) => void;
 }
 

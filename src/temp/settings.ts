@@ -10,6 +10,7 @@ const defaultSettings = {
     "hideDislikes": true,
     },
     "user_id": "080b7013-14b2-4fd8-be8b-f567db3cdb39",
+    "colorMode":"system",
     "blockedTags": [
       "modern au",
       "coffeeshop",

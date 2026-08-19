@@ -1,6 +1,6 @@
 import {useState} from "react";
 import {Link, useLocation} from "react-router-dom";
-import {RouteData, type Panel }from "../../lib/routes.ts";
+import {RouteData, type Panel }from "../../lib/navigation.ts";
 import type {settingsData} from "../../components/Settings/settingTypes.ts"
 
 import Menu from "./Menu.tsx"
@@ -8,10 +8,11 @@ import Settings from "../Settings/index.tsx"
 import "./header.css"
 
 interface headerProps{
-    settings: settingsData
+    settings: settingsData,
+    updateSettings:(updatedSettings:settingsData)=> void
   }
   
-  function Header({settings}:headerProps) { 
+  function Header({settings, updateSettings}:headerProps) { 
     let location = useLocation();
     let routeItem = RouteData.find((r)=>{return r.path === location.pathname});
     const [activePanel, togglePanels] = useState("none");
@@ -28,7 +29,7 @@ interface headerProps{
                 <p className="m-0">{routeItem?.label }</p>
             </div>
             <Menu active={activePanel === "menu"}  onClose={handleClose} />
-            <Settings settings={settings}  active={activePanel === "settings"}  onClose={handleClose} />
+            <Settings settings={settings}  active={activePanel === "settings"}  onClose={handleClose} updateSettings={updateSettings}/>
         </div>
     </header>
 );}

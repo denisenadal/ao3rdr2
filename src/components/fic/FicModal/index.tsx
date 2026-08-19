@@ -15,7 +15,7 @@ interface modalProps {
   fic: Fic,
   show: boolean,
   toggleModal: () => void,
-  updateFic: (update:FicUpdate)=>void
+  updateFic: (update:FicUpdate|string)=>void
 }
 
 const FicModal = ({ fic, show, toggleModal, updateFic }: modalProps) => {

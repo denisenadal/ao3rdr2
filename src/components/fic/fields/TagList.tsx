@@ -5,7 +5,7 @@ interface tlProps{
     fic: Fic,
     tags?: string[];
     size?: "sm"|"md";
-    updateTags?: (update:FicUpdate)=>void;
+    updateTags?: (update:FicUpdate|string)=>void;
 }
 const TagList = ({fic,tags,size= "md",updateTags}:tlProps) => {
   if(!tags || tags.length === 0){return;}

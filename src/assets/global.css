@@ -33,6 +33,11 @@ body {
     color: var(--color-foreground);
     font-size: 14px;
 }
+fieldset{
+    padding: 0;
+    margin:0;
+    display: block;
+}
 input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="file"]):not([type="color"]),
 textarea,
 select,
@@ -66,4 +71,11 @@ a,.btn{
     .container.grid-xxl {
         padding: 0 2rem;
     }
+}
+
+.form-switch .form-icon::before{
+    background: var(--color-primary-contrast);
+}
+.form-radio input:checked + .form-icon::before {
+    background: var(--color-primary-on-background);
 }

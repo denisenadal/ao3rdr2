@@ -26,11 +26,13 @@ function App(){
   })
 
   const [settings, updateSettings] = useState(defaultSettings);
-
+  function handleUpdate(updatedSettings:settingsData){
+    updateSettings(updatedSettings)
+  }
   
   return (
   <Router>
-        <Header settings={settings}/>
+        <Header settings={settings} updateSettings={handleUpdate} />
         <main className="container grid-xxl d-flex">
         <Routes>
           <Route path="/" element={<Home settings={settings} />} ></Route>

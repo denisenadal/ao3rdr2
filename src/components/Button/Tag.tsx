@@ -7,14 +7,14 @@ import "./shared.css"
 import "./tag.css"
 
 interface tagProps {
-  fic:Fic,
+  fic?:Fic,
   tag:string,
   color?: colorScheme,
   variant?: buttonVariant,
   size: "sm"|"md";
   className?: string;
   style?: React.CSSProperties;
-  onRemove?: (update:FicUpdate) => void,
+  onRemove?: (update:FicUpdate|string) => void,
 }
 
 const Tag = ({ fic,tag,color="primary", variant="muted", size = "md",className="", style,onRemove }: tagProps) => {
@@ -23,12 +23,20 @@ const Tag = ({ fic,tag,color="primary", variant="muted", size = "md",className="
   const label = tag;
 
   function handleClick(e:MouseEvent){
-    if(!fic.personal_tags) return;
+    e.preventDefault();
     const tag:string = (e.currentTarget as HTMLInputElement).value
-    const updatedTags = fic.personal_tags.filter(t=>{return t!==tag})
-    const update = {"fic":fic, "update":{"personal_tags": updatedTags}}
 
-    if(onRemove){ onRemove(update) }
+    if(fic){
+      if(!fic.personal_tags) return;
+      const updatedTags = fic.personal_tags.filter(t=>{return t!==tag})
+      const update = {"fic":fic, "update":{"personal_tags": updatedTags}}
+  
+      if(onRemove){ onRemove(update) }
+    }
+    else{
+      if(onRemove){ onRemove(tag) }
+    }
+    
   }
 
   return (

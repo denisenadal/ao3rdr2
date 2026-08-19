@@ -46,7 +46,10 @@
   transform: translateX(100%);
   list-style: none;
   min-width: 320px;
+}
+.navbar .off-canvas .off-canvas-sidebar.active{
   box-shadow: 0 0 100px 10px rgba(var(--color-light-rgb), .8);
+
 }
 .navbar .nav-item-wrapper{
   margin: .25rem 0;

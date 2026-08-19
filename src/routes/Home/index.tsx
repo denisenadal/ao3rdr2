@@ -19,7 +19,8 @@ function Home({settings}:homeProps) {
   })
 
 
-  const updateSelectedFic = (update:FicUpdate) => {
+  const updateSelectedFic = (update:FicUpdate|string) => {
+    if(typeof update === "string")return
     let fic = {...update.fic,...update.update}
     updateFicList(ficList.map(f =>
       f.ao3id === fic.ao3id ? fic : f

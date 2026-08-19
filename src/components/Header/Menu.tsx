@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { RouteData, type Panel} from "../../lib/routes.ts"
+import { type Panel} from "../../lib/navigation.ts"
 import Icon from "../Icon"
 
 interface menuProps{
@@ -10,7 +10,7 @@ interface menuProps{
 function Menu({active,onClose}:menuProps){
     return <>
           <nav className="off-canvas">
-            <button className="off-canvas-toggle btn btn-action s-circle btn-primary btn-ghost p-1" onClick={()=>{onClose(active? "none" : "menu")}}>
+            <button className="off-canvas-toggle btn btn-action s-circle btn-primary btn-ghost" onClick={()=>{onClose(active? "none" : "menu")}}>
                 <Icon name="menu" size={16} />
                 <p className="m-0 text-assistive">menu</p>
             </button>
@@ -20,12 +20,14 @@ function Menu({active,onClose}:menuProps){
                     <Icon name="home" size={16} /> Home</NavLink>
                 </li>
                 <li className="nav-item-wrapper">
-                    <a href="#" className="nav-item" onClick={(e)=>{e.preventDefault;if(onClose)onClose("settings")}}>
+                    <a href="#" className="nav-item" onClick={(e)=>{e.preventDefault; e.stopPropagation();  e.nativeEvent.stopImmediatePropagation();if(onClose)onClose("settings")}}>
                     <Icon name="settings" size={16} /> Settings
                     </a>
                 </li>
                 <li className="nav-item-wrapper">
-                    <NavLink to="backup" className="nav-item" > <Icon name="backup" size={16} /> Backup</NavLink>
+                    <a href="#" className="nav-item" onClick={(e)=>{e.preventDefault; e.stopPropagation();  e.nativeEvent.stopImmediatePropagation();if(onClose)onClose("backup")}}>
+                    <Icon name="backup" size={16} /> Backup
+                    </a>
                 </li>
                 <li className="nav-item-wrapper">
                     <a href="https://archiveofourown.org" className="nav-item" >
