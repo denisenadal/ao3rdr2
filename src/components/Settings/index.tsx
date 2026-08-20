@@ -18,31 +18,28 @@ interface menuProps {
 const Settings = ({ settings, active, onClose,updateSettings }: menuProps) => {
     //TODO extract switch into a render function
     type fieldset ={
-        "section": section
         "fieldname": field,
         "label": string 
     }
-    type section ="rdr" | "ao3"
-    type field = "filterBlockedTags" | "hideDislikes"
+    type field = "ao3_hideBlockedTags" | "ao3_hideDislikes" | "rdr_hideDislikes"
     function handleUpdate(updatedTags:string[]){
         const updatedSettings = {...settings, blockedTags: updatedTags};
         updateSettings(updatedSettings)
     }
 
-    function handleSwitch(section:section,fieldname:field,isChecked:boolean) {
+    function handleSwitch(fieldname:field,isChecked:boolean) {
         console.log(isChecked)
-        const updatedSettings ={...settings, [section]:{...settings[section], [fieldname]: !isChecked }}
+        const updatedSettings ={...settings, [fieldname]: !isChecked }
         console.log(updatedSettings)
         updateSettings(updatedSettings)
 
     }
-    function renderSwitch({section,fieldname,label}:fieldset){
-       const settingSect= settings[section];
-       const isChecked:boolean = settingSect[fieldname] || false;
+    function renderSwitch({fieldname,label}:fieldset){
+       const isChecked:boolean = settings[fieldname] || false;
        
         return (<fieldset className="form-group m-0 columns col-6">
-            <label htmlFor={fieldname} className="form-switch" onClick={()=>{handleSwitch(section,fieldname,isChecked)}}>
-                <input name={fieldname} type="checkbox" checked={isChecked}  />
+            <label htmlFor={fieldname} className="form-switch" onClick={()=>{handleSwitch(fieldname,isChecked)}}>
+                <input name={fieldname} type="checkbox" checked={isChecked} readOnly={true} />
                 <i className="form-icon"></i> {label}
             </label>
         </fieldset>)
@@ -64,15 +61,15 @@ const Settings = ({ settings, active, onClose,updateSettings }: menuProps) => {
                     <h2 className=" h5 m-0 columns col-6">AO3 Widget Settings</h2>
                     <p className="my-1">These settings control the UI of the AO3 website</p>
                     <div className="columns">
-                    {renderSwitch({fieldname:"filterBlockedTags",section:"ao3", label: "Automatically hide fics with blocked tags"})}
-                    {renderSwitch({fieldname:"hideDislikes",section:"ao3", label: "Hide Disliked Fics"})}
+                    {renderSwitch({fieldname:"ao3_hideBlockedTags",label: "Automatically hide fics with blocked tags"})}
+                    {renderSwitch({fieldname:"ao3_hideDislikes", label: "Hide Disliked Fics"})}
                     </div>
                 </section>
                 <section className="table-settings">
                     <h2 className=" h5 mt-2">AO3RDR Table Settings</h2>
                     <p className="m-0">These settings control the UI of the AO3RDR app.</p>
                     <div className="columns">
-                        {renderSwitch({fieldname:"hideDislikes",section:"rdr", label: "Hide Disliked Fics"})}
+                        {renderSwitch({fieldname:"rdr_hideDislikes", label: "Hide Disliked Fics"})}
                     </div>
                     <div className="color-mode">
                         <h3 className="h6 mb-0 mt-2 col-12">Color Mode</h3>

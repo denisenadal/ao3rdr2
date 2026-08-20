@@ -19,7 +19,8 @@ interface modalProps {
 }
 
 const FicModal = ({ fic, show, toggleModal, updateFic }: modalProps) => {
-  const chapterString = fic.chapters.published + "/" + fic.chapters.total
+  if(!fic){return}
+  const chapterString = fic.chapters_published + "/" + fic.chapters_total;
 
 
   function renderTags(tags?:string[] ){

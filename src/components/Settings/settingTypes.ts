@@ -1,14 +1,9 @@
 import {type colorMode} from "../../types/theme.ts"
 export type settingsData = {
-    ao3: {
-        filterBlockedTags: boolean,
-        hideDislikes: boolean,
-    },
-    rdr: {
-        hideDislikes: boolean,
-        filterBlockedTags: boolean, //notactually used tho
-    },
-    user_id: string,
+    ao3_hideBlockedTags: boolean,
+    ao3_hideDislikes: boolean,
+    rdr_hideDislikes: boolean,
+    userId: string,
     blockedTags: string[],
     colorMode: colorMode
 

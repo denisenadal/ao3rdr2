@@ -16,7 +16,7 @@ function ReadStatusToggle({ fic, size = 24, changeReadStatus }: readStatusProps)
     }
     function handleClick(){
         if(!changeReadStatus)return
-        const updatedStatus: number = fic.read === 0 ? 1 :0; 
+        const updatedStatus = !fic.read; 
         changeReadStatus({"fic":fic, "update": {"read":updatedStatus}})
     }
 

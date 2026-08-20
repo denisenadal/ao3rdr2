@@ -4,29 +4,32 @@ import FicTable from "../../components/fic/FicTable";
 import FicModal from "../../components/fic/FicModal";
 import type { Fic,FicUpdate } from "../../components/fic/ficTypes.ts";
 import type {settingsData} from "../../components/Settings/settingTypes.ts"
-import fics from "../../temp/fics"
 
 interface homeProps{
-  settings: settingsData
+  settings: settingsData,
+  fics: Fic[],
+  onUpdatedFics: (fics:Fic[]) =>void
 }
 
-function Home({settings}:homeProps) {  
-  const [ficList, updateFicList] = useState(fics);
+function Home({fics,settings, onUpdatedFics}:homeProps) {  
+  
   const [modalState, updateModalState] = useState({
     show: false,
-    fic: fics[0]
+    fic: fics[0] || null
   })
-  const displayedFics = settings.rdr.hideDislikes
-  ? ficList.filter(fic => fic.rating !== -1)
-  : ficList
+  // const displayedFics = settings.rdr_hideDislikes
+  // ? fics.filter(fic => fic.rating !== -1)
+  // : fics
+  const displayedFics = fics;
 
 
   const updateSelectedFic = (update:FicUpdate|string) => {
     if(typeof update === "string")return
     let fic = {...update.fic,...update.update}
-    updateFicList(ficList.map(f =>
+    const updatedFics = (fics.map(f =>
       f.ao3id === fic.ao3id ? fic : f
     ));
+    onUpdatedFics(updatedFics);
     updateModalState(prev =>
       prev.fic.ao3id === fic.ao3id ? { ...prev, fic } : prev
     );

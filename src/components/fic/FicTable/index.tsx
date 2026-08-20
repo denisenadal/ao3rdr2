@@ -40,17 +40,16 @@ const FicTable = ({ fics, updateSelectedFic, toggleModal, settings }: tableProps
       filterable: true,
       filterType: "number",
       filterFunction: (row, filter) => {
-        let read= 0;
+        let read= false
         let v = filter.condition1.value
         if (v && v !== ""){
-          read = typeof v === "string" ? parseInt(v) : v;
+          read = Boolean(v)
         }
-        if(read > 0 ){read = 1}
         return row.read == read;},
       button: true,
       minWidth: "60px",
       maxWidth: "80px",
-      sortFunction:(a,b)=>{ return a.read - b.read},
+      sortFunction:(a,b)=>{ let ar = a.read ? 1: 0; let br = b.read ? 1: 0; return ar - br},
       cell: row => { return (<ReadStatusToggle fic={row} size={18} changeReadStatus={updateSelectedFic} />) }
     },
     {
@@ -99,15 +98,15 @@ const FicTable = ({ fics, updateSelectedFic, toggleModal, settings }: tableProps
       maxWidth: "200px",
       filterType:"text",
       filterFunction: (row, filter) => {
-        if(!row.author){return false;}
-        let a:string = row.author;
+        if(!row.author.length){return false;}
+        let a:string = row.author[0];
         if(Array.isArray(row.author) ){
           a = row.author.toString();
         }
         const term:string = (filter.condition1.value ?? '').toLowerCase();
         return a.toLowerCase().includes(term)
         return false},
-      sortFunction:(a,b)=>{ const aname = typeof a.author  === "string" ? a.author.toLowerCase() : "";const bname =  typeof b.author  === "string"  ? b.author.toLowerCase() : ""; return (aname.localeCompare(bname, undefined, { sensitivity: 'base' })) },
+      sortFunction:(a,b)=>{ const aname = typeof a.author[0].toLowerCase();const bname =  typeof b.author[0].toLowerCase(); return (aname.localeCompare(bname, undefined, { sensitivity: 'base' })) },
       cell: row => { return (<FicLinks linkType="user" items={row.author} ao3id={row.ao3id} />) }
 
     },
@@ -122,15 +121,12 @@ const FicTable = ({ fics, updateSelectedFic, toggleModal, settings }: tableProps
       maxWidth: "280px",
       filterType:"text",
       filterFunction: (row, filter) => {
-        if(!row.fandom){return false;}
-        let f:string = row.fandom;
-        if(Array.isArray(row.fandom) ){
-          f = row.fandom.toString();
-        }
+        if(!row.fandom.length){return false;}
+        let f:string = row.fandom[0];
         const term:string = (filter.condition1.value ?? '').toLowerCase();
         return f.toLowerCase().includes(term)
         return false},
-      sortFunction:(a,b)=>{ const aname = typeof a.fandom  === "string" ? a.fandom.toLowerCase() : "";const bname =  typeof b.fandom  === "string"  ? b.fandom.toLowerCase() : ""; return (aname.localeCompare(bname, undefined, { sensitivity: 'base' })) },
+      sortFunction:(a,b)=>{ const aname = a.fandom[0].toLowerCase() || "";const bname =   b.fandom[0].toLowerCase() || ""; return (aname.localeCompare(bname, undefined, { sensitivity: 'base' })) },
       cell: row => { return (<FicLinks linkType="tag" items={row.fandom} ao3id={row.ao3id} />) }
 
     },
@@ -145,15 +141,12 @@ const FicTable = ({ fics, updateSelectedFic, toggleModal, settings }: tableProps
       maxWidth: "280px",
       filterType:"text",
       filterFunction: (row, filter) => {
-        if(!row.relationship){return false;}
-        let r:string = row.relationship;
-        if(Array.isArray(row.relationship) ){
-          r = row.relationship.toString();
-        }
+        if(!row.relationship.length){return false;}
+        let r:string = row.relationship[0];
         const term:string = (filter.condition1.value ?? '').toLowerCase();
         return r.toLowerCase().includes(term)
         return false},
-      sortFunction:(a,b)=>{ const aname = typeof a.relationship  === "string" ? a.relationship.toLowerCase() : "";const bname =  typeof b.relationship  === "string"  ? b.relationship.toLowerCase() : ""; return (aname.localeCompare(bname, undefined, { sensitivity: 'base' })) },
+        sortFunction:(a,b)=>{ const aname = a.relationship[0].toLowerCase() || "";const bname =   b.relationship[0].toLowerCase() || ""; return (aname.localeCompare(bname, undefined, { sensitivity: 'base' })) },
       cell: row => { return (<FicLinks linkType="tag" items={row.relationship} ao3id={row.ao3id} />) }
     },
     {
