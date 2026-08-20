@@ -6,7 +6,7 @@
 .navbar>div {
   align-items: stretch;
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   font-weight: 500;
 }
 

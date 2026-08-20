@@ -3,7 +3,6 @@ import type { colorScheme, buttonVariant } from "../../types/theme.ts"
 import type { Fic, FicUpdate } from "../Fic/ficTypes.ts";
 
 import Icon from "../Icon.tsx"
-import "./shared.css"
 import "./tag.css"
 
 interface tagProps {

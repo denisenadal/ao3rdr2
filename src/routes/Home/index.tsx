@@ -1,4 +1,4 @@
-import { useState} from "react";
+import { useEffect,useState} from "react";
 
 import FicTable from "../../components/Fic/FicTable/index.tsx";
 import FicModal from "../../components/Fic/FicModal/index.tsx";
@@ -8,22 +8,18 @@ import type {settingsData} from "../../components/Settings/settingTypes.ts"
 interface homeProps{
   settings: settingsData,
   fics: Fic[],
-  onUpdatedFics: (fics:Fic[]) =>void
+  onUpdatedFics: (fics:Fic[]) =>void,
+  readyState: boolean
 }
 
-function Home({fics,settings, onUpdatedFics}:homeProps) {  
+function Home({fics,settings, onUpdatedFics,readyState}:homeProps) {
   
   const [modalState, updateModalState] = useState({
     show: false,
     fic: fics[0] || null
   })
-  // const displayedFics = settings.rdr_hideDislikes
-  // ? fics.filter(fic => fic.rating !== -1)
-  // : fics
-  const displayedFics = fics;
 
-
-  const updateSelectedFic = (update:FicUpdate|string) => {
+  function updateSelectedFic(update:FicUpdate|string){
     if(typeof update === "string")return
     let fic = {...update.fic,...update.update}
     const updatedFics = (fics.map(f =>
@@ -35,7 +31,7 @@ function Home({fics,settings, onUpdatedFics}:homeProps) {
     );
   };
   
-  const updateModalVisibility = (fic?:Fic) => {
+  function updateModalVisibility(fic?:Fic){
     if(fic){
       updateModalState({ fic: fic, show: true})
       return 
@@ -46,7 +42,7 @@ function Home({fics,settings, onUpdatedFics}:homeProps) {
 
   return (
     <>
-      <FicTable fics={displayedFics} updateSelectedFic={updateSelectedFic}  toggleModal={updateModalVisibility} settings={settings} />
+      <FicTable fics={fics} updateSelectedFic={updateSelectedFic}  toggleModal={updateModalVisibility} settings={settings} readyState={readyState} />
       <FicModal fic={modalState.fic} show={modalState.show} toggleModal={updateModalVisibility} updateFic={updateSelectedFic} /> 
     </>
   )

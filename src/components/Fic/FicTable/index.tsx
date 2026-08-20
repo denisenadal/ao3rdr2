@@ -1,24 +1,33 @@
+import {useState, useEffect} from "react";
+
 import DataTable from 'react-data-table-component';
 import { type TableColumn } from 'react-data-table-component';
+
 import type { Fic,FicUpdate } from "../ficTypes.ts";
 import {type settingsData} from "../../Settings/settingTypes.ts"
-import { formatFicText, getEstTime } from "../ficFormatters.ts"
+
 import Icon from "../../Icon.tsx"
 import ReadStatusToggle from "../fields/ReadStatusToggle/index.tsx"
 import RatingButtons from "../fields/RatingButtons/index.tsx"
 import TagList from "../fields/TagList.tsx"
 import FicLinks from "../fields/FicLinks.tsx"
+
+import { formatFicText, getEstTime } from "../ficFormatters.ts"
 import "./table.css"
 //TODO add tag cell click event to add new tag
 interface tableProps {
   fics: Fic[],
   updateSelectedFic: (update:FicUpdate|string) => void,
   toggleModal: (fic: Fic) => void;
-  settings: settingsData
+  settings: settingsData;
+  readyState:boolean;
 }
 
-const FicTable = ({ fics, updateSelectedFic, toggleModal, settings }: tableProps) => {
-  
+const FicTable = ({ fics, updateSelectedFic, toggleModal, settings,readyState }: tableProps) => {
+  const displayedFics = settings.rdr_hideDislikes
+  ? fics.filter(fic => fic.rating !== -1)
+  : fics
+
   const columns: TableColumn<Fic>[] = [
     {
       name: "",
@@ -209,7 +218,7 @@ const FicTable = ({ fics, updateSelectedFic, toggleModal, settings }: tableProps
     }
   ]
   return (<section id="fic-table" className="table-section">
-    <DataTable columns={columns} data={fics} keyField="ao3id" pagination={true} defaultSortFieldId="visit" defaultSortAsc={false} theme="default" striped={true}  />
+    <DataTable columns={columns} data={displayedFics} keyField="ao3id" pagination={true} defaultSortFieldId="visit" defaultSortAsc={false} theme="default" striped={true} progressPending={!readyState} />
   </section>
   )
 }

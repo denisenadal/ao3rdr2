@@ -23,7 +23,6 @@ const Settings = ({ settings, active, onClose,updateSettings }: menuProps) => {
     }
     function handleSwitch(fieldname:field,isChecked:boolean) {
         const updatedSettings ={...settings, [fieldname]: !isChecked }
-        console.log(updatedSettings)
         updateSettings(updatedSettings)
     }
     function renderSwitch({fieldname,label}:fieldset){
@@ -36,7 +35,7 @@ const Settings = ({ settings, active, onClose,updateSettings }: menuProps) => {
         </fieldset>)
     }
    return (
-        <aside className="off-canvas settings-panel">
+        <aside className={"off-canvas rdr-menu-panel settings-panel" + (active ? " active":"")}>
             <form id="settings-form" className={"off-canvas-sidebar bg-background " + (active ? " active" : "")} style={{ zIndex: 202 }}>
                 <header className="columns">
                     <button className="p-absolute btn btn-ghost s-circle" style={{ top: ".5rem", right: 0 }} aria-label="Close" onClick={(e) => { e.preventDefault;  e.stopPropagation();  e.nativeEvent.stopImmediatePropagation(); onClose("none") }}>

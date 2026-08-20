@@ -2851,7 +2851,7 @@ summary.accordion-header::-webkit-details-marker {
 }
 
 .text-primary {
-  color: var(--color-primary) !important;
+  color: var(--color-primary-on-background) !important;
 }
 
 a.text-primary:focus,
@@ -2864,7 +2864,7 @@ a.text-primary:visited {
 }
 
 .text-secondary {
-  color: var(--gs-100) !important;
+  color: var(--color-secondary-on-background) !important;
 }
 
 a.text-secondary:focus,
@@ -2916,7 +2916,7 @@ a.text-dark:visited {
 }
 
 .text-success {
-  color: var(--success-700) !important;
+  color: var(--success-on-background) !important;
 }
 
 a.text-success:focus,
@@ -2929,7 +2929,7 @@ a.text-success:visited {
 }
 
 .text-warning {
-  color: var(--color-warning) !important;
+  color: var(--color-warning-on-background) !important;
 }
 
 a.text-warning:focus,
@@ -2942,7 +2942,7 @@ a.text-warning:visited {
 }
 
 .text-error {
-  color: var(--color-error) !important;
+  color: var(--color-error-on-background) !important;
 }
 
 a.text-error:focus,

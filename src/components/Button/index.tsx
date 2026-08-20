@@ -1,6 +1,5 @@
 import type { ReactNode } from 'react'
 import type { colorScheme, buttonVariant } from "../../types/theme"
-import "./shared.css"
 
 interface buttonProps {
     label: string | ReactNode,

@@ -11,11 +11,7 @@ interface menuProps{
 
 function Menu({active,onClose}:menuProps){
     return <>
-          <nav className="off-canvas">
-            <button className="off-canvas-toggle btn btn-action s-circle btn-primary btn-ghost" onClick={()=>{onClose(active? "none" : "menu")}}>
-                <Icon name="menu" size={16} />
-                <p className="m-0 text-assistive">menu</p>
-            </button>
+          <nav className={"main-menu rdr-menu-panel off-canvas "+ (active? "active":"")}>
             <ul id="sidebar-id" className={"off-canvas-sidebar bg-background "+(active ? "active":"")} >
                 <li className="nav-item-wrapper">
                     <NavLink to="/" className="nav-item" >
