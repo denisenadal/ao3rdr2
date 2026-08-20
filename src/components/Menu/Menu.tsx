@@ -1,6 +1,8 @@
 import { NavLink } from "react-router-dom";
 import { type Panel} from "../../lib/navigation.ts"
-import Icon from "../Icon"
+import Icon from "../Icon.tsx"
+
+import "./menu.css"
 
 interface menuProps{
     onClose: (nextPanel?:Panel)=> void

@@ -1,8 +1,7 @@
-import {type ChangeEvent} from "react"
 import {capitalize} from "../../lib/format.ts"
 
 import { type Panel } from "../../lib/navigation.ts"
-import{ type settingsData } from "./settingTypes.ts"
+import{ type settingsData, type fieldset, type field } from "./settingTypes.ts"
 import {type colorMode} from "../../types/theme.ts"
 
 import Icon from "../Icon.tsx"
@@ -16,27 +15,19 @@ interface menuProps {
 }
 
 const Settings = ({ settings, active, onClose,updateSettings }: menuProps) => {
-    //TODO extract switch into a render function
-    type fieldset ={
-        "fieldname": field,
-        "label": string 
-    }
-    type field = "ao3_hideBlockedTags" | "ao3_hideDislikes" | "rdr_hideDislikes"
+    const colorModeOptions: colorMode[] = ["light", "dark", "system"]
+
     function handleUpdate(updatedTags:string[]){
         const updatedSettings = {...settings, blockedTags: updatedTags};
         updateSettings(updatedSettings)
     }
-
     function handleSwitch(fieldname:field,isChecked:boolean) {
-        console.log(isChecked)
         const updatedSettings ={...settings, [fieldname]: !isChecked }
         console.log(updatedSettings)
         updateSettings(updatedSettings)
-
     }
     function renderSwitch({fieldname,label}:fieldset){
        const isChecked:boolean = settings[fieldname] || false;
-       
         return (<fieldset className="form-group m-0 columns col-6">
             <label htmlFor={fieldname} className="form-switch" onClick={()=>{handleSwitch(fieldname,isChecked)}}>
                 <input name={fieldname} type="checkbox" checked={isChecked} readOnly={true} />
@@ -44,7 +35,6 @@ const Settings = ({ settings, active, onClose,updateSettings }: menuProps) => {
             </label>
         </fieldset>)
     }
-    const colorModeOptions: colorMode[] = ["light", "dark", "system"]
    return (
         <aside className="off-canvas settings-panel">
             <form id="settings-form" className={"off-canvas-sidebar bg-background " + (active ? " active" : "")} style={{ zIndex: 202 }}>

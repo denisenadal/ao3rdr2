@@ -8,3 +8,8 @@ export type settingsData = {
     colorMode: colorMode
 
 }
+export type fieldset ={
+    "fieldname": field,
+    "label": string 
+}
+export type field = "ao3_hideBlockedTags" | "ao3_hideDislikes" | "rdr_hideDislikes"

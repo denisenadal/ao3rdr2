@@ -1,7 +1,7 @@
 import {BrowserRouter as Router,Routes, Route } from "react-router-dom";
 import {useEffect, useState} from "react";
 import type {settingsData} from "./components/Settings/settingTypes.ts"
-import type { Fic, } from "./components/fic/ficTypes.ts";
+import type { Fic, } from "./components/Fic/ficTypes.ts";
 
 import {supabase} from "./lib/supabase"
 

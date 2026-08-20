@@ -1,8 +1,8 @@
 import { useState} from "react";
 
-import FicTable from "../../components/fic/FicTable";
-import FicModal from "../../components/fic/FicModal";
-import type { Fic,FicUpdate } from "../../components/fic/ficTypes.ts";
+import FicTable from "../../components/Fic/FicTable/index.tsx";
+import FicModal from "../../components/Fic/FicModal/index.tsx";
+import type { Fic,FicUpdate } from "../../components/Fic/ficTypes.ts";
 import type {settingsData} from "../../components/Settings/settingTypes.ts"
 
 interface homeProps{

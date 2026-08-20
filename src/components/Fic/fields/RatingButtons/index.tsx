@@ -26,7 +26,7 @@ function RatingButtons({ fic, size, showAll, changeRating }: RatingProps) {
         <fieldset className="d-flex img-row flex-center p-0 m-0" style={{ ...styles, gap: 2 }}>
             {nums.map((i) => {
                 let isBlank = i !== rating;
-
+                //TODO add support to only show selected rating on mobile
                 return (
                     <div className="rating-button p-relative" key={i} style={{width:size+"px"}}>
                         <label className="p-absolute"> {getRatingIcon(i, size, isBlank)}</label>

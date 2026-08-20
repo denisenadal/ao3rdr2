@@ -1,5 +1,5 @@
 import {type KeyboardEvent, type ChangeEvent, useState} from 'react'
-import Tag from "../Button/Tag"
+import Tag from "../Tag"
 
 interface acProps{
     tags: string[],
@@ -28,7 +28,7 @@ const AutoComplete = ({tags,onUpdateTags}:acProps) => {
             <fieldset className="form-autocomplete-input form-input">
                 {tags.map(tag=>{
                     return (
-                        <Tag key={tag} tag={tag} color="primary" variant="muted" size="md" className="btn-primary" onRemove={()=>{handleRemoveTag(tag)}} />
+                        <Tag key={tag} tag={tag} color="primary" variant="muted" size="md" onRemove={()=>{handleRemoveTag(tag)}} />
                     )
                 })}
                 <input type="text" className="form-input" value={userInput||""} placeholder="Type to add tag, Enter to save" onChange={handleInput}  onKeyDown={(e) => {if (e.key === 'Enter') {e.preventDefault(); handleNewTag(e);} }}/>

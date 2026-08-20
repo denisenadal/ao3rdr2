@@ -1,8 +1,8 @@
 import type { MouseEvent } from 'react'
-import type { colorScheme, buttonVariant } from "../../types/theme"
-import type { Fic, FicUpdate } from "../fic/ficTypes.ts";
+import type { colorScheme, buttonVariant } from "../../types/theme.ts"
+import type { Fic, FicUpdate } from "../Fic/ficTypes.ts";
 
-import Icon from "../../components/Icon"
+import Icon from "../Icon.tsx"
 import "./shared.css"
 import "./tag.css"
 

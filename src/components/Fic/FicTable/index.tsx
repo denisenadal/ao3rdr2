@@ -1,12 +1,11 @@
-import{ type MouseEvent, useState } from "react";
-import DataTable,{ type FilterState} from 'react-data-table-component';
+import DataTable from 'react-data-table-component';
 import { type TableColumn } from 'react-data-table-component';
 import type { Fic,FicUpdate } from "../ficTypes.ts";
-import {type settingsData} from "../../Settings/settingTypes"
+import {type settingsData} from "../../Settings/settingTypes.ts"
 import { formatFicText, getEstTime } from "../ficFormatters.ts"
 import Icon from "../../Icon.tsx"
-import ReadStatusToggle from "../fields/ReadStatusToggle"
-import RatingButtons from "../fields/RatingButtons"
+import ReadStatusToggle from "../fields/ReadStatusToggle/index.tsx"
+import RatingButtons from "../fields/RatingButtons/index.tsx"
 import TagList from "../fields/TagList.tsx"
 import FicLinks from "../fields/FicLinks.tsx"
 import "./table.css"
@@ -19,7 +18,6 @@ interface tableProps {
 }
 
 const FicTable = ({ fics, updateSelectedFic, toggleModal, settings }: tableProps) => {
-  const minDefault = "30px"
   
   const columns: TableColumn<Fic>[] = [
     {
@@ -27,7 +25,7 @@ const FicTable = ({ fics, updateSelectedFic, toggleModal, settings }: tableProps
       id: "ao3id",
       selector: row => row.ao3id,
       center: true,
-      minWidth: minDefault,
+      minWidth: "30px",
       maxWidth: "44px",
       cell: (row) => {
         return (<button color="primary"  className="btn-ghost s-circle" onClick={() => { toggleModal(row) }}><Icon name="open" size={18} /></button>)
@@ -210,9 +208,6 @@ const FicTable = ({ fics, updateSelectedFic, toggleModal, settings }: tableProps
       }
     }
   ]
-
-
-
   return (<section id="fic-table" className="table-section">
     <DataTable columns={columns} data={fics} keyField="ao3id" pagination={true} defaultSortFieldId="visit" defaultSortAsc={false} theme="default" striped={true}  />
   </section>

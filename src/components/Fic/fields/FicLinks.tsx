@@ -11,6 +11,7 @@ interface ficLinkProps {
 const  FicLinks=({linkType, items,ao3id}:ficLinkProps) =>{
     if(!items){ return}
     let itemArray=[];
+    //then it is a title
     if(typeof items=== "string"){
         itemArray = linkType === "work" ? [items] : stringToArray(items)
     }

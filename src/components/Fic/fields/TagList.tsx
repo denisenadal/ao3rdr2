@@ -1,4 +1,4 @@
-import Tag from "../../../components/Button/Tag"
+import Tag from "../../Tag/index.tsx"
 import type { Fic,FicUpdate } from "../ficTypes.ts";
 
 interface tlProps{

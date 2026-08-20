@@ -3,7 +3,7 @@ import {Link, useLocation} from "react-router-dom";
 import {RouteData, type Panel }from "../../lib/navigation.ts";
 import type {settingsData} from "../../components/Settings/settingTypes.ts"
 
-import Menu from "./Menu.tsx"
+import Menu from "../Menu/Menu.tsx"
 import Settings from "../Settings/index.tsx"
 import "./header.css"
 

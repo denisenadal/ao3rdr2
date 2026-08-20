@@ -4,7 +4,7 @@ import Icon from "../../Icon.tsx"
 import type { Fic, FicUpdate } from "../ficTypes.ts";
 import {formatFicText} from "../ficFormatters.ts"
 import RatingButtons from "../fields/RatingButtons/index.tsx"
-import ReadStatusToggle from "../fields/ReadStatusToggle"
+import ReadStatusToggle from "../fields/ReadStatusToggle/index.tsx"
 import FicLinks from "../fields/FicLinks.tsx"
 import TagList from "../fields/TagList.tsx"
 import FicNotes from "../fields/FicNotes.tsx"
