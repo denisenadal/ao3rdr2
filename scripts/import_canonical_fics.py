@@ -205,8 +205,94 @@ def normalize_record(raw: dict, user_id: str, stats: Counter) -> dict | None:
     }
 
 
+COLUMNS = [
+    "user_id",
+    "ao3id",
+    "title",
+    "author",
+    "fandom",
+    "category",
+    "relationship",
+    "summary",
+    "word_count",
+    "chapters_published",
+    "chapters_total",
+    "complete",
+    "rating",
+    "read",
+    "visit",
+    "crawled_at",
+    "ao3_updated_at",
+    "deleted",
+    "hasupdate",
+    "recrawl",
+    "chapter_id",
+    "notes",
+    "personal_tags",
+]
+
+
+def sql_literal(value) -> str:
+    if value is None:
+        return "NULL"
+    if isinstance(value, bool):
+        return "true" if value else "false"
+    if isinstance(value, int):
+        return str(value)
+    if isinstance(value, list):
+        if not value:
+            return "ARRAY[]::text[]"
+        return "ARRAY[" + ", ".join(sql_literal(item) for item in value) + "]::text[]"
+    text = str(value)
+    tag = "f"
+    while f"${tag}$" in text:
+        tag += "x"
+    return f"${tag}${text}${tag}$"
+
+
+def sql_row(row: dict) -> str:
+    return "(" + ", ".join(sql_literal(row[col]) for col in COLUMNS) + ")"
+
+
+def write_sql_dump(rows: list[dict], out_dir: Path) -> list[Path]:
+    out_dir.mkdir(parents=True, exist_ok=True)
+    col_list = ", ".join(COLUMNS)
+    update_set = ",\n  ".join(
+        f"{col} = excluded.{col}" for col in COLUMNS if col not in ("user_id", "ao3id")
+    )
+    written: list[Path] = []
+    parts = list(range(0, len(rows), BATCH_SIZE)) or [0]
+    total_parts = max(1, (len(rows) + BATCH_SIZE - 1) // BATCH_SIZE)
+
+    for part, start in enumerate(parts, start=1):
+        batch = rows[start : start + BATCH_SIZE]
+        if not batch:
+            continue
+        path = out_dir / f"fics_part_{part:02d}.sql"
+        values = ",\n".join(sql_row(row) for row in batch)
+        path.write_text(
+            "\n".join(
+                [
+                    f"-- Normalized fics dump, part {part}/{total_parts} ({len(batch)} rows)",
+                    "-- Paste into Supabase SQL Editor and run.",
+                    "-- id is omitted; Postgres generates a uuid per row (default gen_random_uuid()).",
+                    "-- user_id + ao3id are data columns, not the row id.",
+                    "-- ON CONFLICT requires unique (user_id, ao3id) so re-runs update instead of duplicate.",
+                    "-- If that fails, run supabase/migrations/20260819_fics_use_uuid_pk.sql first.",
+                    "",
+                    f"insert into public.fics ({col_list})",
+                    "values",
+                    values,
+                    f"on conflict (user_id, ao3id) do update set\n  {update_set};",
+                    "",
+                ]
+            )
+        )
+        written.append(path)
+    return written
+
+
 def postgrest_upsert(url: str, key: str, rows: list[dict]) -> None:
-    endpoint = url.rstrip("/") + "/rest/v1/fics?on_conflict=user_id,ao3id"
     body = json.dumps(rows).encode("utf-8")
     req = urllib.request.Request(
         endpoint,
@@ -232,11 +318,12 @@ def main() -> None:
     load_env_file(ROOT / ".env.local")
 
     dry_run = "--dry-run" in sys.argv
+    sql_dump = "--sql-dump" in sys.argv
     supabase_url = os.environ.get("VITE_SUPABASE_URL") or os.environ.get("SUPABASE_URL")
     service_key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
     user_id = os.environ.get("IMPORT_USER_ID", DEFAULT_USER_ID)
 
-    if not dry_run and (not supabase_url or not service_key):
+    if not dry_run and not sql_dump and (not supabase_url or not service_key):
         raise SystemExit(
             "Missing VITE_SUPABASE_URL and/or SUPABASE_SERVICE_ROLE_KEY. "
             "Add the service role key to .env (never prefix it with VITE_)."
@@ -253,8 +340,13 @@ def main() -> None:
     stats["source"] = len(data)
     stats["normalized"] = len(rows)
 
-    dry_run = "--dry-run" in sys.argv
-    if dry_run:
+    if sql_dump:
+        out_dir = ROOT / "supabase" / "seed"
+        written = write_sql_dump(rows, out_dir)
+        print(f"Wrote {len(written)} SQL files to {out_dir}")
+        for path in written:
+            print(f"  {path.name} ({path.stat().st_size} bytes)")
+    elif dry_run:
         print("Dry run — skipping upsert")
     else:
         for i in range(0, len(rows), BATCH_SIZE):

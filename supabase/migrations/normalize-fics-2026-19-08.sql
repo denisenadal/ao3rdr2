@@ -1,7 +1,7 @@
 create table if not exists public.fics (
-  id uuid primary key default gen_random_uuid(),
+  id uuid primary key default gen_random_uuid(),  -- auto row id; do not set manually
   user_id uuid not null,
-  ao3id bigint not null,
+  ao3id bigint not null,                          -- AO3 work id, not the row id
 
   title text not null,
   author text[] not null default '{}',
@@ -31,7 +31,7 @@ create table if not exists public.fics (
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now(),
 
-  constraint fics_user_id_ao3id_key unique (user_id, ao3id)
+  constraint fics_user_id_ao3id_key unique (user_id, ao3id)  -- prevents duplicate bookmarks, not the PK
 );
 
 create index if not exists fics_user_visit_idx on public.fics (user_id, visit desc);
