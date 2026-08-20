@@ -24,9 +24,12 @@ interface tableProps {
 }
 
 const FicTable = ({ fics, updateSelectedFic, toggleModal, settings,readyState }: tableProps) => {
-  const displayedFics = settings.rdr_hideDislikes
-  ? fics.filter(fic => fic.rating !== -1)
-  : fics
+  const [displayedFics, updateDisplayedFics] = useState(fics);
+
+  useEffect(() => {
+    let subset =settings.rdr_hideDislikes ? fics.filter(fic => fic.rating !== -1) : fics;
+    updateDisplayedFics(subset)
+  }, [fics,settings])
 
   const columns: TableColumn<Fic>[] = [
     {

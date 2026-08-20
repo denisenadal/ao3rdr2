@@ -21,7 +21,7 @@ function App(){
   const userId = import.meta.env.VITE_TEST_USER_ID;
   //sync fics
   let initFics:Fic[] = []
-  const [ficList, updateFicList] = useState(initFics);
+  const [fics, updateFics] = useState(initFics);
   const [ficError, setFicErr] = useState("");
   const [ficsReady, setFicsReady] = useState(false)
 // sync settings 
@@ -53,12 +53,13 @@ function App(){
     getSettings()
   }, [])
   
+  
   function handleUpdate(updatedSettings:settingsData){
     updateSettings(updatedSettings)
 
   }
   function handleFicUpdates(fics:Fic[]){
-    updateFicList(fics)
+    updateFics(fics)
   }
 
   return (
@@ -68,7 +69,7 @@ function App(){
           {settingsError ? (<p className="text-error">{settingsError}</p>) : ""}
           {ficError ? (<p className="text-error">{ficError}</p>) : ""}
         <Routes>
-          <Route path="/" element={<Home fics={ficList} settings={settings} onUpdatedFics={handleFicUpdates} readyState={ficsReady}/>} ></Route>
+          <Route path="/" element={<Home fics={fics} settings={settings} onUpdatedFics={handleFicUpdates} readyState={ficsReady}/>} ></Route>
           <Route path="/about"></Route>
           <Route path="/styles" element={<Styles />}></Route>
         </Routes>
