@@ -1,4 +1,4 @@
-import { type KeyboardEvent, type ChangeEvent, useState, useEffect, useMemo } from 'react'
+import { type ChangeEvent, useState, useMemo } from 'react'
 import type { Fic, } from "./Fic/ficTypes.ts";
 
 import Tag from "./Tag/index.tsx"
@@ -8,7 +8,6 @@ interface acProps {
     tags: string[],
     onUpdateTags: (updatedTagList: string[]) => void
 }
-//TODO modify to work with fic tags
 const AutoComplete = ({ fic, tags, onUpdateTags }: acProps) => {
     const [userInput, updateInput] = useState("")
     const displayedTags = fic ? fic.personal_tags : tags;
@@ -47,7 +46,7 @@ const AutoComplete = ({ fic, tags, onUpdateTags }: acProps) => {
         </ul>)
     }
     return (
-        <div className="form-autocomplete"  >
+        <div className="form-autocomplete col-12"  >
             <fieldset className="form-autocomplete-input form-input">
                 {displayedTags.map(tag => {
                     return (

@@ -1,4 +1,4 @@
-import type {settingsData} from "../components/Settings/settingTypes.ts"
+import type {settingsData} from "../components/Panel/Settings/settingTypes.ts"
 
 const defaultSettings = {
     ao3_hideBlockedTags: true,

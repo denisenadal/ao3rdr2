@@ -208,7 +208,7 @@
     --color-primary-rgb: var(--primary-700-rgb);
     --color-primary-contrast: var(--color-white);
     --color-primary-contrast-rgb: var(--color-white-rgb);
-    --color-primary-on-background: var(--primary-400);
+    --color-primary-on-background: var(--primary-300);
     --color-secondary: var(--gs-700);
     --color-secondary-rgb: var(--gs-700-rgb);
     --color-secondary-contrast: var(--gs-100);
@@ -235,6 +235,15 @@
     --color-gray-contrast-rgb: var(--color-white-rgb);
   }
 
+
+  a:focus,
+  a:hover,
+  a:active,
+  a.active {
+    color: var(--primary-400);
+    border-color: var(--primary-400);
+    text-decoration: none;
+  }
 
   .btn-muted,
   .btn-ghost:focus,

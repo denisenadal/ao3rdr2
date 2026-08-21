@@ -1,20 +1,33 @@
 .fic-modal .modal-container {
     color: var(--color-foreground);
     color-scheme: inherit;
+    max-height: 100vh;
 }
-.fic-modal .modal-header .columns {
+
+.fic-modal .fic-meta-left {
     justify-content: center;
     align-items: flex-start;
+    gap: .2rem;
 }
-.fic-modal  p{
-    margin:0;
-    padding:0;
+
+.fic-modal .fic-meta-left .columns {
+    justify-content: center;
+    align-items: center;
+    gap: .5rem
 }
-.fic-modal .modal-body{
+
+
+.fic-modal p {
+    margin: 0;
+    padding: 0;
+}
+
+.fic-modal .modal-body {
     gap: 1rem 0;
-  display: flex;
-  flex-flow: column;
+    display: flex;
+    flex-flow: column;
 }
-.fic-modal .editable .form-label{
+
+.fic-modal .editable .form-label {
     padding-bottom: .3rem
 }

@@ -1,10 +1,10 @@
-import { useState, useEffect, useMemo } from "react";
+import { useMemo } from "react";
 
 import DataTable from 'react-data-table-component';
 import { type TableColumn } from 'react-data-table-component';
 
 import type { Fic, FicUpdate } from "../ficTypes.ts";
-import { type settingsData } from "../../Settings/settingTypes.ts"
+import { type settingsData } from "../../Panel/Settings/settingTypes.ts"
 
 import Icon from "../../Icon.tsx"
 import ReadStatusToggle from "../fields/ReadStatusToggle/index.tsx"
@@ -197,7 +197,7 @@ const FicTable = ({ fics, updateSelectedFic, toggleModal, settings, readyState }
       filterable: true,
       right: true,
       minWidth: "66px",
-      maxWidth: "86px",
+      maxWidth: "120px",
       filterType: "datetime",
       selector: row => row.visit,
       format: (row, i) => {

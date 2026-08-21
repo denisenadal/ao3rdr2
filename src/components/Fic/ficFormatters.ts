@@ -1,14 +1,4 @@
-import { formatDate, stringToArray} from "../../lib/format"
-import type { Fic } from "./ficTypes.ts";
-
-const isUnread = (data:Fic)=>{
-    // if(data.read && data.chapters_published){
-    //     return data.read < data.chapters_published;
-    // }
-    // else{
-    //     return data.rating == 0;
-    // }
-}
+import { formatDate} from "../../lib/format"
 const formatTagUrl = (tagName: string) => {
     tagName = tagName.replaceAll("/", "*s*");
     tagName = tagName.replaceAll(".", "*d*");
@@ -51,23 +41,28 @@ function formatFicText(textType="Summary", data:number|string){
     if(typeof data !== "number" && typeof data !== "string"){
         return data
     }
-    let num = typeof data === "string" ? parseInt(data) : data;
-    if(textType.includes("Date")){
-        return formatDate(num,textType)
-    }
-    else if(textType === "WordCount"){
-        return  !Number.isNaN(num) ?  num.toLocaleString() : data
-    }
-    else if(textType === "EstTime"){
-        if(!Number.isNaN(num) ){
-            const [hours,minutes] = getEstTime(num, true)
-            const hStr = hours? hours+"h" : ""
-            const  mStr = minutes? minutes+"m" : ""
+    if(typeof data == "number"){
+        let num = typeof data === "string" ? parseInt(data) : data;
 
-            return hStr +" "+mStr
-        }  
-        return "?"
-    }     
+        if(textType === "WordCount"){
+            return  !Number.isNaN(num) ?  num.toLocaleString() : data
+        }
+        else if(textType === "EstTime"){
+            if(!Number.isNaN(num) ){
+                const [hours,minutes] = getEstTime(num, true)
+                const hStr = hours? hours+"h" : ""
+                const  mStr = minutes? minutes+"m" : ""
+    
+                return hStr +" "+mStr
+            }  
+            return "?"
+        }     
+    }
+    else{
+        if(textType.includes("Date")){
+            return formatDate(data,textType)
+        }
+    }
     return data
 }
 

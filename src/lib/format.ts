@@ -17,10 +17,8 @@ const capitalize =(str:string)=>{
     return first.toUpperCase() + rest.toLowerCase()
 }
 
-const formatDate = (ts: number | string, format: string) => {
-    let dt = typeof ts === "string" ? parseInt(ts) : ts;
-    let z = Intl.DateTimeFormat().resolvedOptions().timeZone
-    let d = DateTime.fromISO(dt.toString(), { zone: z });
+const formatDate = (ts:string, format: string) => {
+    const d = DateTime.fromISO(ts);
     let d2="";
     switch (format) {
         case "ShortDate":

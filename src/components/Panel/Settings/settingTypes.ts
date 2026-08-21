@@ -1,4 +1,4 @@
-import {type colorMode} from "../../types/theme.ts"
+import {type colorMode} from "../../../lib/theme.ts"
 export type settingsData = {
     ao3_hideBlockedTags: boolean,
     ao3_hideDislikes: boolean,

@@ -55,29 +55,25 @@ const FicModal = ({
           >
             <Icon name="close" className="close-modal btn-icon" />
           </button>
-          <section className="fic-meta flex-column d-flex columns">
-            <h2 id="fm-heading" className="modal-title m-0 h4">
-              {fic.title}
-            </h2>
-            <p id="fm-author" className="m-0">
-              {fic.author}
-            </p>
-          </section>
+          <h2 id="fm-heading" className="modal-title m-0 h4">
+            <FicLinks linkType="work" items={fic.title} ao3id={fic.ao3id} />
+          </h2>
           <section className="columns">
-            <div className="fic-controls column col-auto">
-              <ReadStatusToggle
-                fic={fic}
-                size={24}
-                changeReadStatus={updateFic}
-              />
-            </div>
-            <div className="column">
-              <RatingButtons
-                fic={fic}
-                size={18}
-                showAll={true}
-                changeRating={updateFic}
-              />
+            <div className="column flex-column fic-meta-left">
+              <FicLinks linkType="user" items={fic.author} ao3id={fic.ao3id} className="m-0 col-12" />
+              <div className="columns m-0">
+                <ReadStatusToggle
+                  fic={fic}
+                  size={22}
+                  changeReadStatus={updateFic}
+                />
+                <RatingButtons
+                  fic={fic}
+                  size={20}
+                  showAll={true}
+                  changeRating={updateFic}
+                />
+              </div>
             </div>
             <div className="column col-auto form-group text-right">
               <p className="m-0 form-label">Visited</p>
@@ -151,7 +147,7 @@ const FicModal = ({
           />
         </footer>
       </dialog>
-    </section>
+    </section >
   );
 };
 

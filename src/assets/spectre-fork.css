@@ -232,26 +232,6 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-a {
-  color: var(--color-primary-on-background);
-  outline: none;
-  text-decoration: none;
-  border-bottom: .1em solid transparent
-}
-
-a:focus {
-  box-shadow: 0 0 0 .1rem rgba(var(--color-primary-rgb), .2);
-}
-
-a:focus,
-a:hover,
-a:active,
-a.active {
-  color: var(--primary-700);
-  border-color: var(--primary-700);
-  text-decoration: none;
-}
-
 h1,
 h2,
 h3,
@@ -3087,7 +3067,8 @@ a.text-error:visited {
 }
 
 .divider {
-  border-top: .05rem solid var(--gs-050);
+  border-top: .15rem solid rgba(var(--color-borders-rgb), .5);
+  opacity: .5;
   height: .05rem;
   margin: .4rem 0;
 }

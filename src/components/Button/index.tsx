@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import type { colorScheme, buttonVariant } from "../../types/theme"
+import type { colorScheme, buttonVariant } from "../../lib/theme"
 
 interface buttonProps {
     label: string | ReactNode,
@@ -9,10 +9,10 @@ interface buttonProps {
     style?: React.CSSProperties;
     onClick: () => void
 }
-const Button = ({ label, color = "primary", variant = "solid", className="", style, onClick }: buttonProps) => {
-    
+const Button = ({ label, color = "primary", variant = "solid", className = "", style, onClick }: buttonProps) => {
+
     return (
-        <button className={"btn btn-" + color +" btn-"+variant+" "+className} style={style}  onClick={()=>{onClick()}}>{label}</button>
+        <button className={"btn btn-" + color + " btn-" + variant + " " + className} style={style} onClick={() => { onClick() }}>{label}</button>
     )
 }
 
