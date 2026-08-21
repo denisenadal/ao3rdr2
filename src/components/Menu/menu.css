@@ -57,10 +57,20 @@
     background: rgba(var(--color-foreground-rgb), .12);
 }
 
-.nav-item:hover {
+.nav-item:hover,
+.menu .menu-item>a:focus,
+ul.menu li.menu-item>a:hover {
     background: rgba(var(--primary-500-rgb), .12);
     color: var(--color-primary-on-background);
     border-color: transparent;
+}
+
+ul.menu li.menu-item {
+    font-weight: 400;
+}
+
+ul.menu li.menu-item a {
+    padding: .5rem;
 }
 
 .settings-panel.active .off-canvas-sidebar {

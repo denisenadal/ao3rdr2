@@ -1,5 +1,4 @@
-import { useEffect,useState} from "react";
-
+import { useState} from "react";
 import FicTable from "../../components/Fic/FicTable/index.tsx";
 import FicModal from "../../components/Fic/FicModal/index.tsx";
 import type { Fic,FicUpdate } from "../../components/Fic/ficTypes.ts";
@@ -9,14 +8,15 @@ interface homeProps{
   settings: settingsData,
   fics: Fic[],
   onUpdatedFics: (fics:Fic[]) =>void,
-  readyState: boolean
+  readyState: boolean,
+  allTags: string[]
 }
 
-function Home({fics,settings, onUpdatedFics,readyState}:homeProps) {
+function Home({fics,settings, onUpdatedFics,readyState,allTags}:homeProps) {
   
   const [modalState, updateModalState] = useState({
     show: false,
-    fic: fics[0] || null
+    fic: fics[0] || null,
   })
 
   function updateSelectedFic(update:FicUpdate|string){
@@ -26,9 +26,11 @@ function Home({fics,settings, onUpdatedFics,readyState}:homeProps) {
       f.ao3id === fic.ao3id ? fic : f
     ));
     onUpdatedFics(updatedFics);
-    updateModalState(prev =>
-      prev.fic.ao3id === fic.ao3id ? { ...prev, fic } : prev
-    );
+    if(modalState.fic && modalState.fic.ao3id){
+      updateModalState(prev =>
+        prev.fic.ao3id === fic.ao3id ? { ...prev, fic } : prev
+      );
+    }
   };
   
   function updateModalVisibility(fic?:Fic){
@@ -43,7 +45,7 @@ function Home({fics,settings, onUpdatedFics,readyState}:homeProps) {
   return (
     <>
       <FicTable fics={fics} updateSelectedFic={updateSelectedFic}  toggleModal={updateModalVisibility} settings={settings} readyState={readyState} />
-      <FicModal fic={modalState.fic} show={modalState.show} toggleModal={updateModalVisibility} updateFic={updateSelectedFic} /> 
+      <FicModal fic={modalState.fic} show={modalState.show} toggleModal={updateModalVisibility} updateFic={updateSelectedFic} allTags={allTags} /> 
     </>
   )
 }

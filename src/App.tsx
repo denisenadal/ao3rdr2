@@ -1,5 +1,5 @@
 import {BrowserRouter as Router,Routes, Route } from "react-router-dom";
-import {useEffect, useState} from "react";
+import {useEffect, useState, useMemo} from "react";
 import type {settingsData} from "./components/Settings/settingTypes.ts"
 import type { Fic, } from "./components/Fic/ficTypes.ts";
 
@@ -7,6 +7,7 @@ import {supabase} from "./lib/supabase"
 
 import Home from "./routes/Home"
 import Styles from "./routes/Styles"
+import Test from "./routes/Test"
 import Header from "./components/Header"
 
 import './assets/spectre-fork.css'
@@ -21,6 +22,7 @@ function App(){
   const userId = import.meta.env.VITE_TEST_USER_ID;
   //sync fics
   let initFics:Fic[] = []
+  let initTags:string[] = [];
   const [fics, updateFics] = useState(initFics);
   const [ficError, setFicErr] = useState("");
   const [ficsReady, setFicsReady] = useState(false)
@@ -31,7 +33,7 @@ function App(){
   
   useEffect(() => {
     async function getFics() {
-      const { data: fics, error } = await supabase.from('fics').select().eq("user_id", userId)
+      const { data: fics, error } = await supabase.from('fics').select().eq("user_id", userId).order('ao3id', { ascending: true })
       if(error){ setFicErr(error.message);setFicsReady(true)} 
       if (fics) {
         handleFicUpdates(fics)
@@ -61,6 +63,10 @@ function App(){
   function handleFicUpdates(fics:Fic[]){
     updateFics(fics)
   }
+  const personalTags = useMemo(
+    () => [...new Set(fics.flatMap(f => f.personal_tags ?? []))],
+    [fics]
+  );  
 
   return (
   <Router>
@@ -69,9 +75,10 @@ function App(){
           {settingsError ? (<p className="text-error">{settingsError}</p>) : ""}
           {ficError ? (<p className="text-error">{ficError}</p>) : ""}
         <Routes>
-          <Route path="/" element={<Home fics={fics} settings={settings} onUpdatedFics={handleFicUpdates} readyState={ficsReady}/>} ></Route>
+          <Route path="/" element={<Home fics={fics} settings={settings} onUpdatedFics={handleFicUpdates} readyState={ficsReady} allTags={personalTags} />} ></Route>
           <Route path="/about"></Route>
           <Route path="/styles" element={<Styles />}></Route>
+          <Route path="/test" element={<Test  fics={fics} settings={settings} updateAllFics={handleFicUpdates}  allTags={personalTags} />}></Route>
         </Routes>
         </main>
   </Router>

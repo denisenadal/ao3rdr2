@@ -5,7 +5,7 @@ import{ type settingsData, type fieldset, type field } from "./settingTypes.ts"
 import {type colorMode} from "../../types/theme.ts"
 
 import Icon from "../Icon.tsx"
-import AutoComplete from "../BlockedTags/AutoComplete"
+import AutoComplete from "../AutoComplete.tsx"
 
 interface menuProps {
     onClose: (nextPanel?: Panel) => void
@@ -36,7 +36,7 @@ const Settings = ({ settings, active, onClose,updateSettings }: menuProps) => {
     }
    return (
         <aside className={"off-canvas rdr-menu-panel settings-panel" + (active ? " active":"")}>
-            <form id="settings-form" className={"off-canvas-sidebar bg-background " + (active ? " active" : "")} style={{ zIndex: 202 }}>
+            <div id="settings-form" className={"off-canvas-sidebar bg-background " + (active ? " active" : "")} style={{ zIndex: 202 }}>
                 <header className="columns">
                     <button className="p-absolute btn btn-ghost s-circle" style={{ top: ".5rem", right: 0 }} aria-label="Close" onClick={(e) => { e.preventDefault;  e.stopPropagation();  e.nativeEvent.stopImmediatePropagation(); onClose("none") }}>
                         <Icon name="close" size={18} className="close-modal btn-icon" />
@@ -76,7 +76,7 @@ const Settings = ({ settings, active, onClose,updateSettings }: menuProps) => {
                         </fieldset>
                     </div>
                 </section>
-            </form>
+            </div>
         </aside>
     )
 }

@@ -1,5 +1,14 @@
 import { formatDate, stringToArray} from "../../lib/format"
+import type { Fic } from "./ficTypes.ts";
 
+const isUnread = (data:Fic)=>{
+    // if(data.read && data.chapters_published){
+    //     return data.read < data.chapters_published;
+    // }
+    // else{
+    //     return data.rating == 0;
+    // }
+}
 const formatTagUrl = (tagName: string) => {
     tagName = tagName.replaceAll("/", "*s*");
     tagName = tagName.replaceAll(".", "*d*");
