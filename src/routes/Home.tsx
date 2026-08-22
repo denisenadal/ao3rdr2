@@ -9,11 +9,12 @@ interface homeProps {
   settings: settingsData,
   fics: Fic[],
   onUpdatedFics: (fics: Fic[]) => void,
+  deleteFic: (fic: Fic) => void,
   readyState: boolean,
   allTags: string[]
 }
 
-function Home({ fics, settings, onUpdatedFics, readyState, allTags }: homeProps) {
+function Home({ fics, settings, onUpdatedFics, deleteFic, readyState, allTags }: homeProps) {
 
   const [modalState, updateModalState] = useState({
     show: false,
@@ -47,7 +48,7 @@ function Home({ fics, settings, onUpdatedFics, readyState, allTags }: homeProps)
   return (
     <>
       <FicTable fics={fics} updateSelectedFic={updateSelectedFic} toggleModal={updateModalVisibility} settings={settings} readyState={readyState} />
-      <FicModal fic={modalState.fic} show={modalState.show} toggleModal={updateModalVisibility} updateFic={updateSelectedFic} allTags={allTags} />
+      <FicModal fic={modalState.fic} show={modalState.show} toggleModal={updateModalVisibility} updateFic={updateSelectedFic} allTags={allTags} deleteFic={deleteFic} />
     </>
   )
 }

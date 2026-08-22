@@ -3,7 +3,7 @@ import { useEffect, useState, useMemo } from "react";
 import { type settingsData, defaultSettings } from "./components/Panel/Settings/settingTypes.ts"
 import type { Fic, } from "./components/Fic/ficTypes.ts";
 
-import { getFicsSB, getSettingsSB, updateSettingsSB } from "./lib/supabase"
+import { getFicsSB, deleteFicSB, getSettingsSB, updateSettingsSB } from "./lib/supabase"
 
 import Home from "./routes/Home"
 import Styles from "./routes/Styles"
@@ -57,7 +57,15 @@ function App() {
     getSettings()
   }, [])
 
-
+  async function handleDeleteFic(fic: Fic) {
+    let newFicSet = fics.filter(f => { return f.id !== fic.id })
+    setFics(newFicSet)
+    const err = await deleteFicSB(fic.id)
+    if (err) {
+      console.log(err)
+      setFics([...fics, fic])
+    }
+  }
   async function handleUpdate(updatedSettings: settingsData) {
     setSettings(updatedSettings)
     const err = await updateSettingsSB(updatedSettings)
@@ -80,7 +88,7 @@ function App() {
         {settingsError ? (<p className="text-error">{settingsError}</p>) : ""}
         {ficError ? (<p className="text-error">{ficError}</p>) : ""}
         <Routes>
-          <Route path="/" element={<Home fics={fics} settings={settings} onUpdatedFics={handleFicUpdates} readyState={ficsReady && settingsReady} allTags={personalTags} />} ></Route>
+          <Route path="/" element={<Home fics={fics} settings={settings} onUpdatedFics={handleFicUpdates} deleteFic={handleDeleteFic} readyState={ficsReady && settingsReady} allTags={personalTags} />} ></Route>
           <Route path="/about"></Route>
           <Route path="/styles" element={<Styles />}></Route>
           <Route path="/test" element={<Test fics={fics} settings={settings} updateAllFics={handleFicUpdates} allTags={personalTags} />}></Route>
