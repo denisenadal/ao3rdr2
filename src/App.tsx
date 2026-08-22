@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useEffect, useState, useMemo } from "react";
-import type { settingsData } from "./components/Panel/Settings/settingTypes.ts"
+import { type settingsData, defaultSettings } from "./components/Panel/Settings/settingTypes.ts"
 import type { Fic, } from "./components/Fic/ficTypes.ts";
 
 import { getFicsSB, getSettingsSB, updateSettingsSB } from "./lib/supabase"
@@ -14,20 +14,18 @@ import './assets/spectre-fork.css'
 import '@spectre-org/spectre-css/dist/spectre-exp.css'
 import './assets/global.css'
 
-import defaultSettings from "./temp/settings"
-
-
 
 function App() {
   const userId = import.meta.env.VITE_TEST_USER_ID;
   //sync fics
   let initFics: Fic[] = []
-  const [fics, updateFics] = useState(initFics);
+  const [fics, setFics] = useState(initFics);
   const [ficError, setFicErr] = useState("");
   const [ficsReady, setFicsReady] = useState(false)
   // sync settings 
-  const [settings, updateSettings] = useState(defaultSettings);
+  const [settings, setSettings] = useState<settingsData>({});
   const [settingsError, setSettingErr] = useState("");
+  const [settingsReady, setSettingsReady] = useState(false)
 
 
   useEffect(() => {
@@ -36,7 +34,7 @@ function App() {
 
       if (error) { setFicErr(error.message); setFicsReady(true) }
       if (fics) {
-        handleFicUpdates(fics)
+        setFics(fics)
         setFicsReady(true)
       }
     }
@@ -46,10 +44,14 @@ function App() {
   useEffect(() => {
     async function getSettings() {
       const { settings, error } = await getSettingsSB(userId)
-      if (error) { setSettingErr(error.message) }
+      if (error) {
+        setSettingErr(error.message)
+        setSettings(defaultSettings)
+      }
       if (settings) {
         const s: settingsData = { ...settings[0] }
-        handleUpdate(s)
+        setSettings(s)
+        setSettingsReady(true)
       }
     }
     getSettings()
@@ -57,14 +59,14 @@ function App() {
 
 
   async function handleUpdate(updatedSettings: settingsData) {
-    updateSettings(updatedSettings)
+    setSettings(updatedSettings)
     const err = await updateSettingsSB(updatedSettings)
     if (err) {
       console.log(err)
     }
   }
   function handleFicUpdates(fics: Fic[]) {
-    updateFics(fics)
+    setFics(fics)
   }
   const personalTags = useMemo(
     () => [...new Set(fics.flatMap(f => f.personal_tags ?? []))],
@@ -78,7 +80,7 @@ function App() {
         {settingsError ? (<p className="text-error">{settingsError}</p>) : ""}
         {ficError ? (<p className="text-error">{ficError}</p>) : ""}
         <Routes>
-          <Route path="/" element={<Home fics={fics} settings={settings} onUpdatedFics={handleFicUpdates} readyState={ficsReady} allTags={personalTags} />} ></Route>
+          <Route path="/" element={<Home fics={fics} settings={settings} onUpdatedFics={handleFicUpdates} readyState={ficsReady && settingsReady} allTags={personalTags} />} ></Route>
           <Route path="/about"></Route>
           <Route path="/styles" element={<Styles />}></Route>
           <Route path="/test" element={<Test fics={fics} settings={settings} updateAllFics={handleFicUpdates} allTags={personalTags} />}></Route>

@@ -5,10 +5,11 @@ import Tag from "./Tag/index.tsx"
 
 interface acProps {
     fic?: Fic,
-    tags: string[],
+    tags: string[] | undefined,
     onUpdateTags: (updatedTagList: string[]) => void
 }
 const AutoComplete = ({ fic, tags, onUpdateTags }: acProps) => {
+    if (!tags) return
     const [userInput, updateInput] = useState("")
     const displayedTags = fic ? fic.personal_tags : tags;
     const matches: string[] = useMemo(() => {

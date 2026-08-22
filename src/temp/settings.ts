@@ -4,6 +4,7 @@ const defaultSettings = {
     ao3_hideBlockedTags: true,
     ao3_hideDislikes: true,
     rdr_hideDislikes: true,
+    rdr_rowsPerPage: 10,
     userId: "080b7013-14b2-4fd8-be8b-f567db3cdb39",
     colorMode:"system",
     blockedTags: []

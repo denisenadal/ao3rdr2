@@ -7,10 +7,9 @@ import "./menu.css"
 
 interface menuProps {
     onClose: (nextPanel: Panel) => void,
-    active: boolean,
 }
 
-function Menu({ active, onClose }: menuProps) {
+function Menu({ onClose }: menuProps) {
     const nav = useNavigate()
     function handleRouteClick(e: MouseEvent, route: string) {
         e.preventDefault;
@@ -23,7 +22,6 @@ function Menu({ active, onClose }: menuProps) {
         onClose(nextPanel);
 
     }
-    if (!active) return;
     return <>
         <nav className={"main-menu"}>
             <ul className="nav nav-list">

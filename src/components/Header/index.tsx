@@ -4,6 +4,8 @@ import { RouteData, type Panel } from "../../lib/navigation.ts";
 import type { settingsData } from "../Panel/Settings/settingTypes.ts"
 
 import MenuPanel from "../Panel"
+import Menu from "../Panel/Menu"
+import Settings from "../Panel/Settings"
 import Icon from "../Icon.tsx"
 
 import "./header.css"
@@ -32,10 +34,14 @@ function Header({ settings, updateSettings }: headerProps) {
                         <p className="m-0 text-assistive">menu</p>
                     </button>
                 </section>
-                <MenuPanel activePanel={activePanel} setPanel={setPanel} settings={settings} updateSettings={updateSettings} />
+                <MenuPanel active={activePanel === "menu"} size="sm" handleClose={setPanel}>
+                    <Menu onClose={setPanel} />
+                </MenuPanel>
+                <MenuPanel active={activePanel == "settings"} size="md" handleClose={setPanel}>
+                    <Settings settings={settings} updateSettings={updateSettings} /></MenuPanel>
             </div>
         </header>
-    );
+    )
 }
 
 export default Header;

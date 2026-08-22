@@ -1,32 +1,25 @@
+import React from "react"
 import { type Panel } from "../../lib/navigation.ts"
 import Icon from "../../components/Icon"
-import type { settingsData } from "../Panel/Settings/settingTypes.ts"
-import Settings from "./Settings"
-import Menu from "./Menu"
+
 
 interface mProps {
-    activePanel: Panel,
-    setPanel: (nextPanel: Panel) => void
-    settings: settingsData,
-    updateSettings: (updatedSettings: settingsData) => void
+    children: React.ReactNode,
+    active: boolean,
+    size: "sm" | "md"
+    handleClose: (nextPanel: Panel) => void
 }
 
-const MenuPanel = ({ settings, updateSettings, activePanel, setPanel }: mProps) => {
-
-    function handleClose(nextPanel: Panel) {
-        console.log("handleclose" + nextPanel)
-        setPanel(nextPanel)
-    }
+const MenuPanel = ({ children, active, size, handleClose }: mProps) => {
     return (
-        <aside className={"off-canvas rdr-menu-panel" + (activePanel !== "none" ? " active" : "")}>
-            <div id={activePanel + "-panel"} className={"off-canvas-sidebar bg-background " + (activePanel !== "none" ? " active" : "")} style={{ zIndex: 202 }}>
+        <aside className={"off-canvas rdr-menu-panel" + (active ? " active" : "")}>
+            <div className={"off-canvas-sidebar bg-background " + size + "-panel " + (active ? " active" : "")} style={{ zIndex: 202 }}>
                 <header className="columns">
-                    <button className=" btn btn-ghost s-circle" style={{ top: ".5rem", right: 0 }} aria-label="Close" onClick={() => { handleClose("none") }}>
+                    <button className=" btn btn-ghost s-circle" aria-label="Close" onClick={() => { handleClose("none") }}>
                         <Icon name="close" size={18} className="close-modal btn-icon" />
                     </button>
                 </header>
-                <Menu onClose={handleClose} active={activePanel === "menu"} />
-                <Settings settings={settings} updateSettings={updateSettings} active={activePanel == "settings"} />)
+                {children}
 
             </div>
         </aside>

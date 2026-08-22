@@ -69,9 +69,13 @@ ul.menu li.menu-item a {
     padding: .5rem;
 }
 
-#settings-panel.active.off-canvas-sidebar {
+.md-panel.active.off-canvas-sidebar {
     max-width: 100%;
     width: 540px;
     padding: 2rem;
     gap: 2rem;
+}
+
+.v-center .form-group {
+    align-items: center;
 }

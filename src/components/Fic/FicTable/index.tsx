@@ -1,10 +1,10 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 
 import DataTable from 'react-data-table-component';
 import { type TableColumn } from 'react-data-table-component';
 
 import type { Fic, FicUpdate } from "../ficTypes.ts";
-import { type settingsData } from "../../Panel/Settings/settingTypes.ts"
+import { type settingsData, rowsPerOptions } from "../../Panel/Settings/settingTypes.ts"
 
 import Icon from "../../Icon.tsx"
 import ReadStatusToggle from "../fields/ReadStatusToggle/index.tsx"
@@ -15,7 +15,6 @@ import FicLinks from "../fields/FicLinks.tsx"
 import { formatFicText, getEstTime } from "../ficFormatters.ts"
 import { stringToArray } from "../../../lib/format"
 import "./table.css"
-//TODO add tag cell click event to add new tag
 interface tableProps {
   fics: Fic[],
   updateSelectedFic: (update: FicUpdate | string) => void,
@@ -26,7 +25,6 @@ interface tableProps {
 
 const FicTable = ({ fics, updateSelectedFic, toggleModal, settings, readyState }: tableProps) => {
   const displayedFics = useMemo(() => settings.rdr_hideDislikes ? fics.filter(fic => fic.rating !== -1) : fics, [fics, settings])
-
 
   function handleCellEdit(row: Fic, value: string, column: TableColumn<Fic>) {
     const field = column.id as keyof Fic;
@@ -235,7 +233,7 @@ const FicTable = ({ fics, updateSelectedFic, toggleModal, settings, readyState }
     }
   ]
   return (<section id="fic-table" className="table-section">
-    <DataTable columns={columns} data={displayedFics} keyField="ao3id" pagination={true} defaultSortFieldId="visit" defaultSortAsc={false} theme="default" striped={true} progressPending={!readyState} />
+    <DataTable key={settings.rdr_rowsPerPage} columns={columns} data={displayedFics} keyField="ao3id" pagination={true} defaultSortFieldId="visit" defaultSortAsc={false} theme="default" striped={true} progressPending={!readyState} paginationPerPage={settings.rdr_rowsPerPage} paginationRowsPerPageOptions={rowsPerOptions} />
   </section>
   )
 }
